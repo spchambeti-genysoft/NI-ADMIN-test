@@ -1,0 +1,1090 @@
+<div class="dashboard_bg">
+  <div class="container-fluid">
+    <div>
+      <div class="row justify-content-center py-4 pl-lg-3 pr-lg-4">
+        <div class="col-12 col-lg-12 backgroundBorder">
+          <div *ngIf="showgrid">
+            <div class="row incent_head" style="justify-content: space-between">
+              <div class="col-12 col-lg-2 d-flex align-items-center pl-lg-2">
+                <h4>Incentives</h4>
+                <img
+                  *ngIf="!ShowAddIncentive"
+                  src="assets/Images/add_white_icon.png"
+                  (click)="showIncentiveAddPanel()"
+                  class="img_curser"
+                />
+              </div>
+              <div class="col-12 col-lg-7" *ngIf="showSearchDiv">
+                <form [formGroup]="SearchIncentiveForm">
+                  <div class="row justify-content-end" id="BrandDiv">
+                    <div class="mr-2">
+                      <!-- <angular2-multiselect formControlName="brandsrch" style="cursor: pointer; text-align: left; color:black"  [data]="serachBrands" [(ngModel)]="selectedSearchBrandItems"
+                                          [settings]="brandSettings"
+                                          (onSelect)="onBrandItemSelect($event)"
+                                          (onDeSelect)="OnBrandItemDeSelect($event)"
+                                          (onSelectAll)="onBrandSelectAll($event)"
+                                          (onDeSelectAll)="onBrandDeSelectAll($event)">
+                                      </angular2-multiselect> -->
+                    </div>
+                    <div>
+                      <select
+                        (change)="getIncentivesList()"
+                        formControlName="ddldate"
+                        class="typeselect"
+                      >
+                        <option value="P">Past</option>
+                        <option value="C">Current</option>
+                        <option value="F">Future</option>
+                      </select>
+                    </div>
+
+                    <div
+                      class="d-flex align-items-center justify-content-end"
+                      class="img_curser d-flex"
+                    >
+                      <div
+                        class="px-3"
+                        style="width: 65px"
+                        (click)="atoZClick()"
+                      >
+                        A - Z
+                      </div>
+                      <div (click)="SortGrid()">
+                        <img src="assets/Images/sorting_img.png" />
+                      </div>
+                    </div>
+
+                    <div class="search">
+                      <input
+                        type="text"
+                        placeholder="Search"
+                        formControlName="txtsearch"
+                        (keyup)="onSearch()"
+                      />
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- <form [formGroup]="SearchIncentiveForm"> -->
+            <div
+              class="row"
+              *ngIf="atozFltr"
+              style="height: 50px; margin-bottom: 10px"
+            >
+              <div style="width: 100%">
+                <app-atoz-filter
+                  (onAlphaClick)="onAlphaCatch($event)"
+                ></app-atoz-filter>
+              </div>
+            </div>
+
+            <div *ngIf="dataSource.data.length == 0" class="noDataAvailable">
+              No Incentives available
+            </div>
+
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="BRAND">
+                  <th mat-header-cell *matHeaderCellDef>Brand</th>
+                  <td mat-cell *matCellDef="let element">
+                    <div style="padding: 7px" *ngIf="element.BrandLogo != ''">
+                      <div *ngFor="let lg of element.BrandLogo?.split(',')">
+                        <img
+                          style="max-width: 50px"
+                          src="{{ ImagPath }}/{{ lg.split('@')[0] }}"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="NAME">
+                  <th mat-header-cell *matHeaderCellDef>Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.MI_NAME }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="STATUS">
+                  <th mat-header-cell *matHeaderCellDef>Status</th>
+                  <td mat-cell *matCellDef="let element">
+                    <div>
+                      <span
+                        style="width: 15%; text-align: center"
+                        *ngIf="element.MI_STATUS == 'P'"
+                      >
+                        <div style="color: green">Published</div></span
+                      >
+                      <span
+                        tyle="width: 15%;text-align: center;"
+                        *ngIf="element.MI_STATUS == 'D'"
+                      >
+                        <div style="color: red">Draft</div></span
+                      >
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="CreatedName">
+                  <th mat-header-cell *matHeaderCellDef>Created By</th>
+                  <td mat-cell *matCellDef="let element" style="color: green">
+                    {{ element.CreatedName }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="PublishedUserName">
+                  <th mat-header-cell *matHeaderCellDef>Published By</th>
+                  <td mat-cell *matCellDef="let element">
+                    <div style="color: green" *ngIf="element.MI_STATUS == 'P'">
+                      {{ element.PublishedUserName }}
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="PublishedDate">
+                  <th mat-header-cell *matHeaderCellDef>Published Date</th>
+                  <td mat-cell *matCellDef="let element">
+                    <div *ngIf="element.Published != ''">
+                      {{ element.Published }}
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ACTIONS">
+                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <td mat-cell *matCellDef="let element">
+                    <span class="p-3" *ngIf="element.MI_STATUS != 'P'">
+                      <button
+                        [disabled]="element.MI_STATUS == 'P'"
+                        mat-icon-button
+                        (click)="
+                          viewIncentiveData(
+                            element.MI_ID,
+                            element.brandids,
+                            'E'
+                          )
+                        "
+                      >
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                    </span>
+                    <span class="p-3" *ngIf="element.MI_STATUS == 'P'">
+                      <button
+                        mat-icon-button
+                        [disabled]="element.MI_STATUS != 'P'"
+                        (click)="
+                          viewIncentiveData(
+                            element.MI_ID,
+                            element.brandids,
+                            'V'
+                          )
+                        "
+                      >
+                        <mat-icon>remove_red_eye</mat-icon>
+                      </button>
+                    </span>
+
+                    <span class="p-3" *ngIf="element.MI_STATUS != 'P'">
+                      <button
+                        mat-icon-button
+                        [disabled]="element.MI_STATUS == 'P'"
+                        (click)="deleteIncentiveData(element.MI_ID)"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </span>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+
+              <mat-paginator
+                [pageSizeOptions]="[10, 20, 100]"
+                showFirstLastButtons
+              ></mat-paginator>
+            </div>
+
+            <!-- <div class="contentss">
+                                      <table class="dashboard" >
+                                          <tbody>
+                                              <ng-container
+                                                  *ngIf="incentivesArray | alphaFilter : alphaSrch: alphaColumns :'inventory' as incentivesdata; else noItems">
+                                                  <tr *ngFor="let item of incentivesdata">
+                                                      <td style="width: 40%;text-align: left  ;">
+                                                          <div style="padding: 7px;" *ngIf="item.BrandLogo !=''">
+                                                              <div class="d-flex">
+                                                              <div *ngFor="let lg of item.BrandLogo?.split(',')"><img style="max-width: 50px;"
+                                                                      src="{{ImagPath}}/{{lg.split('@')[0]}}">
+                                                              </div></div>
+                                                              <div><span
+                                                                      class="brandcontentcss">{{item.MI_NAME}}</span>
+                                                              </div>
+                                                          </div>
+                                                      </td>
+
+                                                      <td style="width: 15%;text-align: center;"
+                                                          *ngIf="item.MI_STATUS == 'P'">
+                                                          <div class="Active">Published</div>
+                                                      </td>
+                                                      <td style="width: 15%;text-align: center;"
+                                                          *ngIf="item.MI_STATUS == 'D'">
+                                                          <div class="InActive">Draft</div>
+                                                      </td>
+                                                      <td style="width: 15%;text-align: center;" >
+                                                          <div class="Active">{{item.CreatedName}}</div>
+                                                      </td>
+                                                      <td style="width: 15%;text-align: center;">
+                                                          <div class="Active"  *ngIf="item.MI_STATUS == 'P'">{{item.PublishedUserName}}</div>
+                                                      </td>
+                                                      <td style="width: 15%;" >
+                                                          <div *ngIf="item.Published !=''">{{item.Published}}</div>
+                                                      </td>
+
+                                                      <td *ngIf="item.MI_STATUS == 'D'; else elsediv" style="width: 10%;">
+                                                          <div style="width:15%; text-align: center; cursor: pointer;" title="Edit">
+                                                              <a style="color:white;font-size: 14px;cursor: pointer;"
+                                                              (click)="viewIncentiveData(item.MI_ID,item.brandids, 'E')"><img
+                                                              src="assets/Images/edit_gry_icon.png"></a>
+                                                          </div>
+                                                        </td>
+                                                        <td style="width: 20%;">
+                                                          <div title="Delete">
+                                                              <a style="color:white;font-size: 14px;cursor: pointer;"
+                                                              (click)="deleteIncentiveData(item.MI_ID)"><img height="20" width="17" src="assets/Images/del_gry.png"></a>
+                                                          </div>
+                                                        </td>
+
+                                                        <ng-template #elsediv>
+                                                            <td style="width: 10%;">
+                                                              <div style="width:15%; text-align: center; cursor: pointer;" title="View">
+                                                              <a style="color:white;font-size: 14px;cursor: pointer;"
+                                                              (click)="viewIncentiveData(item.MI_ID,item.brandids, 'V')"><img src="assets/Images/eye_icon.png" ></a>
+
+                                                          </div>
+                                                          </td>
+                                                      </ng-template>
+
+                                                  </tr>
+                                                  <ng-container *ngIf="!incentivesdata.length && hide"
+                                                  [ngTemplateOutlet]="noItems">View</ng-container>
+                                              </ng-container>
+                                              <ng-template #noItems>
+                                                  <tr>
+                                                      <td colspan="9" style="text-align: center;">No Incentives
+                                                          Available!</td>
+                                                      </tr>
+                                                  </ng-template>
+                                          </tbody>
+
+                                      </table>
+                                  </div> -->
+            <!-- </form> -->
+          </div>
+
+          <div *ngIf="ShowAddIncentive">
+            <div class="row incent_head" style="justify-content: space-between">
+              <div class="col-12 col-lg-5 d-flex align-items-center pl-lg-2">
+                <h4 *ngIf="showBrandImageDiv == true">Add New Incentive</h4>
+                <h4 *ngIf="showBrandImageDiv == false">Edit Incentive</h4>
+              </div>
+
+              <div
+                style="float: right; cursor: pointer"
+                *ngIf="!showgrid"
+                (click)="cancelEdit()"
+                title="Back"
+              >
+                <img
+                  src="assets/Images/back-wht.png"
+                  style="position: relative; width: 24px"
+                />
+              </div>
+            </div>
+
+            <form
+              [formGroup]="incentiveMasterForm"
+              (ngSubmit)="OnSubmit()"
+              class="incent_bg"
+            >
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <div class="row">
+                    <div class="col-lg-2 align-self-center">Brand:</div>
+
+                    <div
+                      *ngIf="selectedBrandsList != '' && brandspopup == false"
+                      style="display: flex"
+                    >
+                      <div
+                        *ngFor="let item of selectedBrandLogo; let i = index"
+                        style="margin-top: -12px"
+                      >
+                        <img class="imglogo" src="{{ ImagPath }}/{{ item }}" />
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                      <a
+                        href="javascript:void(0);"
+                        data-toggle="modal"
+                        data-target="#modelId"
+                        (click)="addBrand()"
+                        ><img src="assets/Images/circle_icon.png"
+                      /></a>
+
+                      <small
+                        class="errormessage"
+                        *ngIf="submitted && selectedbrandid.length == 0"
+                        >Brand is required
+                      </small>
+                    </div>
+                  </div>
+                  <div class="mt-4">
+                    <div class="form-group row incent">
+                      <label class="col-lg-2 align-self-center">Name:</label>
+                      <div class="col-lg-10">
+                        <input
+                          type="text"
+                          maxlength="100"
+                          formControlName="incentivename"
+                          autofocus
+                        />
+                        <small
+                          class="errormessage"
+                          *ngIf="
+                            submitted &&
+                            incentiveMasterForm.controls.incentivename.hasError(
+                              'required'
+                            )
+                          "
+                          >Incentive Name is required
+                        </small>
+                      </div>
+                    </div>
+                    <div class="form-group row incent">
+                      <label class="col-lg-2 align-self-center"
+                        >Incentive Code:</label
+                      >
+                      <div class="col-lg-10">
+                        <input
+                          type="text"
+                          maxlength="20"
+                          formControlName="incentivecode"
+                          autofocus
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group row incent">
+                      <label class="col-lg-2 align-self-center"
+                        >Incentive Type:</label
+                      >
+                      <div class="col-lg-10">
+                        <select
+                          formControlName="incentivetype"
+                          [disabled]="showBrandImageDiv"
+                        >
+                          <option value="">Select</option>
+                          <option
+                            *ngFor="let it of incentivetypes"
+                            [value]="it.incentivetype_id"
+                          >
+                            {{ it.incentivetype_name }}
+                          </option>
+                        </select>
+                        <small
+                          class="errormessage"
+                          *ngIf="
+                            submitted &&
+                            incentiveMasterForm.controls.incentivetype.hasError(
+                              'required'
+                            )
+                          "
+                          >Incentive Type is required
+                        </small>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-2 align-self-center">Period:</label>
+                      <div
+                        class="col-lg-10 d-flex"
+                        style="justify-content: space-between"
+                      >
+                        <span class="startDate">
+                          <div>
+                            <input
+                              type="date"
+                              class="formatcenter"
+                              placeholder="Start"
+                              formControlName="datefrom"
+                              required="required"
+                              required
+                              pattern="\d{4}-\d{2}-\d{2}"
+                              (change)="changeFirstInput($event)"
+                            />
+                          </div>
+                          <div>
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                submitted &&
+                                incentiveMasterForm.controls.datefrom.hasError(
+                                  'required'
+                                )
+                              "
+                              >Start Date is required
+                            </small>
+                          </div>
+                        </span>
+                        <span class="startDate pl-2 ml-4">
+                          <div>
+                            <input
+                              type="date"
+                              class="formatcenter"
+                              placeholder="End"
+                              formControlName="dateto"
+                              required="required"
+                              required
+                              pattern="\d{4}-\d{2}-\d{2}"
+                              (change)="changeSecondInput($event)"
+                            />
+                          </div>
+                          <div>
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                submitted &&
+                                incentiveMasterForm.controls.dateto.hasError(
+                                  'required'
+                                )
+                              "
+                              >End Date is required
+                            </small>
+                          </div>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="form-group row incent">
+                      <label class="col-lg-2 align-self-center"
+                        >Region(s):</label
+                      >
+                      <div class="col-lg-10">
+                        <!-- <angular2-multiselect formControlName="region" id="dvRegions"
+                                                          style="cursor: pointer; text-align: left; color:black"
+                                                          [data]="dropdownList" [(ngModel)]="selectedRegionItems"
+                                                          [settings]="dropdownSettings"
+                                                          (onSelect)="onItemSelect($event)"
+                                                          (onDeSelect)="OnItemDeSelect($event)"
+                                                          (onSelectAll)="onSelectAll($event)"
+                                                          (onDeSelectAll)="onDeSelectAll($event)">
+                                                      </angular2-multiselect> -->
+                        <!-- <small class="errormessage"
+                                                          *ngIf="submitted && incentiveMasterForm.controls.region.hasError('required')">Region
+                                                          is
+                                                          required
+
+                                                      </small> -->
+                      </div>
+                    </div>
+
+                    <div class="form-group row incent">
+                      <label class="col-lg-2 align-self-center"
+                        >Description:</label
+                      >
+                      <div class="col-lg-10">
+                        <textarea
+                          maxlength="500"
+                          formControlName="description"
+                          rows="5"
+                          cols="57"
+                          style="
+                            outline: none;
+                            background: #454444;
+                            border: none !important;
+                            padding: 0 10px !important;
+                            color: #ffffff;
+                            font-size: 12px;
+                            border-radius: 3px;
+                            width: 100%;
+                          "
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    <div *ngIf="dvStores && this.dealershipStores.length > 0">
+                      <div class="form-group row incent">
+                        <label class="col-lg-2 align-self-center">&nbsp;</label>
+                        <div class="col-lg-10">
+                          <div
+                            class="custom-control custom-checkbox border-bottom mb-lg-1"
+                          >
+                            <input
+                              type="checkbox"
+                              class="custom-control-input"
+                              formControlName="selectall"
+                              id="customallCheck"
+                              [value]="0"
+                              (change)="onAllCheckboxChangeEvent($event)"
+                              [checked]="
+                                dealershipStores.length ==
+                                selectedchkList.length
+                              "
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="customallCheck"
+                              >Select All Stores
+                              <span
+                                >({{ dealershipStores.length }})</span
+                              ></label
+                            >
+                          </div>
+                          <div class="storedet">
+                            <div
+                              *ngFor="
+                                let item of dealershipStores;
+                                let i = index
+                              "
+                            >
+                              <div class="custom-control custom-checkbox">
+                                <input
+                                  type="checkbox"
+                                  class="custom-control-input"
+                                  id="customCheck{{ i }}"
+                                  [value]="item.dealer_id"
+                                  [checked]="item.checked == 'Y'"
+                                  (change)="onCheckboxChange($event, i)"
+                                />
+                                <label
+                                  class="custom-control-label"
+                                  for="customCheck{{ i }}"
+                                  >{{ item.dealer_name }}</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row incent">
+                      <label class="col-lg-2 align-self-center"
+                        >Upload Document</label
+                      >
+                      <div class="col-lg-10">
+                        <img
+                          src="assets/Images/Upload.png"
+                          style="cursor: pointer"
+                          (click)="selectFile.click()"
+                        />
+                        <input
+                          style="display: none"
+                          type="file"
+                          formControlName="file"
+                          (change)="Processfile($event)"
+                          #selectFile
+                          accept=".pdf,.docx"
+                        />
+                        <div *ngIf="AddView">
+                          {{ fileName.name
+                          }}<img
+                            *ngIf="fileName != ''"
+                            src="../../assets/Images/cancel-icon.png"
+                            class="closecls"
+                            (click)="deleteDocument()"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row incent">
+                      <label class="col-lg-2 align-self-center">&nbsp;</label>
+                      <div class="col-lg-10" *ngIf="EditView">
+                        <!-- <a style="color:#fff;">{{selectedFile}}</a> -->
+                        <a style="color: #fff"
+                          >{{ originalFileName }}
+                          <img
+                            *ngIf="
+                              originalFileName != '' && originalFileName != null
+                            "
+                            src="../../assets/Images/cancel-icon.png"
+                            class="closecls"
+                            (click)="deleteDocument()"
+                        /></a>
+                      </div>
+                    </div>
+                    <div class="form-group row incent">
+                      <label class="col-lg-2 align-self-center">&nbsp;</label>
+                      <div class="col-lg-10">
+                        <input
+                          value="Save"
+                          class="btn_save mt-5"
+                          type="submit"
+                        />
+                        <input
+                          style="
+                            margin-left: 5px;
+                            border: 1px solid #949393 !important;
+                          "
+                          class="btn_back"
+                          value="Cancel"
+                          (click)="CancelSAveClick()"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div *ngIf="showIncentiveView">
+            <div class="row">
+              <div class="col-6 col-lg-6 brand_details">
+                <div>
+                  <div class="d-flex align-items-center">
+                    <div class="brand_logo mr-auto">
+                      <div
+                        *ngIf="
+                          incentivesData.BrandLogo != '' &&
+                          incentivesData.BrandLogo != null
+                        "
+                        class="d-flex"
+                      >
+                        <div
+                          *ngFor="
+                            let ibl of incentivesData.BrandLogo?.split(',')
+                          "
+                        >
+                          <img src="{{ ImagPath }}/{{ ibl.split('@')[0] }}" />
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div *ngIf="TypeOfView == 'E'" class="img_curser" (click)="editIncentive(incentivesData.MI_ID)"><a><img
+                                                          src="assets/Images/edit_gry_icon.png"></a> </div> -->
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <div class="font-bold d-flex">
+                    <p class="lblcolor">Incentive Name:</p>
+                    <p>&nbsp; {{ incentivesData.MI_NAME }}</p>
+                  </div>
+                  <div
+                    class="d-flex"
+                    *ngIf="
+                      incentivesData.Code != '' && incentivesData.Code != null
+                    "
+                  >
+                    <p class="lblcolor">Incentive Code:</p>
+                    <p>&nbsp; {{ incentivesData.Code }}</p>
+                  </div>
+                  <div class="d-flex">
+                    <p class="lblcolor">Incentive Type:</p>
+                    <p>&nbsp; {{ incentivesData.typename }}</p>
+                  </div>
+                  <div class="d-flex">
+                    <p class="lblcolor">Effective Date Range:</p>
+                    <p>
+                      &nbsp; <span> {{ FromDate }} to {{ ToDate }}</span>
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="mt-0 d-flex"
+                  *ngIf="incentiveRegions != '' && incentiveRegions != null"
+                >
+                  <p class="lblcolor">Region(s):</p>
+                  <p>&nbsp; {{ incentiveRegions }}</p>
+                </div>
+                <div
+                  class="d-flex"
+                  *ngIf="
+                    incentivesData.Description != '' &&
+                    incentivesData.Description != null
+                  "
+                >
+                  <p class="lblcolor">Description:&nbsp;</p>
+                  <p>{{ incentivesData.Description }}</p>
+                </div>
+
+                <div
+                  *ngIf="
+                    incentivesData.DocName != '' &&
+                    incentivesData.DocName != null
+                  "
+                  class="d-flex"
+                >
+                  <p class="lblcolor">Incentive Document:</p>
+                  <a
+                    style="
+                      color: #fff;
+                      text-decoration: underline;
+                      cursor: pointer;
+                    "
+                    (click)="openDocument(incentivesData.DocName)"
+                    >&nbsp;View Document</a
+                  >
+                </div>
+                <div class="mt-3">
+                  <div *ngIf="tacdata.length != 0">
+                    <div class="Headings d-flex">
+                      <span>Terms & Conditions</span
+                      ><span class="ml-2">
+                        <div
+                          *ngIf="showTermDiv"
+                          (click)="EditTermsAndConditions()"
+                          title="Edit Terms"
+                        >
+                          <img
+                            src="assets/Images/edit_gry_icon.png"
+                            style="width: 14px; cursor: pointer"
+                          />
+                        </div>
+                      </span>
+                    </div>
+                    <div *ngFor="let terms of tacdata">
+                      <p
+                        *ngIf="
+                          terms.INT_VALUE == '' &&
+                          terms.MIT_TYPE == 1 &&
+                          terms.MIT_ISDEALERSPECIFIC == 'N'
+                        "
+                      >
+                        <li>{{ terms.MIT_DISPLAYNAME }}</li>
+                      </p>
+                      <p
+                        *ngIf="
+                          terms.INT_VALUE == '' &&
+                          terms.MIT_TYPE == 1 &&
+                          terms.MIT_ISDEALERSPECIFIC == 'Y'
+                        "
+                      >
+                        <li>
+                          {{ terms.MIT_DISPLAYNAME }}:&nbsp;
+                          <span class="lblcolor">Dealer Will Submit</span>
+                        </li>
+                      </p>
+                      <p *ngIf="terms.INT_VALUE != '' && terms.MIT_TYPE == 2">
+                        <li>
+                          {{ terms.MIT_DISPLAYNAME }}:
+                          <span class="lblcolor">{{ terms.INT_VALUE }}</span>
+                        </li>
+                      </p>
+                      <p *ngIf="terms.INT_VALUE != '' && terms.MIT_TYPE == 3">
+                        <li>
+                          {{ terms.TermName }}:
+                          <span class="lblcolor">{{
+                            terms.MIT_DISPLAYNAME
+                          }}</span>
+                        </li>
+                      </p>
+                      <div
+                        *ngIf="terms.MIT_TYPE == 8 && terms.OptionValue != ''"
+                      >
+                        <div class="d-flex">
+                          <li>{{ terms.MIT_DISPLAYNAME }}:&nbsp;</li>
+                          <div
+                            *ngFor="let item of terms.OptionValue?.split(',')"
+                          >
+                            <p class="lblcolor">{{ item.split("@")[1] }}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3" *ngIf="lineData.length != 0">
+                  <div class="Headings">Details</div>
+                  <div *ngFor="let li of lineData; let sqn = index">
+                    <div class="pb-2">
+                      <div class="d-flex">
+                        <p class="lblcolor">Line Header:&nbsp;</p>
+                        <span>{{ li.LineHeader }}</span>
+                        <span class="ml-2"
+                          ><div
+                            (click)="EditLineItems(li.LineHeaderId, sqn)"
+                            title="Edit Detail"
+                            *ngIf="TypeOfView == 'E'"
+                          >
+                            <img
+                              src="assets/Images/edit_gry_icon.png"
+                              style="width: 14px; cursor: pointer"
+                            /></div
+                        ></span>
+                      </div>
+                      <div class="d-flex">
+                        <p
+                          class="lblcolor"
+                          *ngIf="li.ModelYears != '' && li.ModelYears != null"
+                        >
+                          Models:&nbsp;
+                        </p>
+                        <p>
+                          <span
+                            *ngIf="li.ModelYears != '' && li.ModelYears != null"
+                            >{{ li.ModelYears }}</span
+                          >
+                          <span
+                            *ngIf="
+                              li.ModelIncludeNames != null &&
+                              li.ModelIncludeNames != ''
+                            "
+                            class="lblcolor"
+                            >&nbsp;{{ li.ModelIncludeNames }}</span
+                          >
+                          <span
+                            *ngIf="
+                              li.ModelExcludeNames != null &&
+                              li.ModelExcludeNames != ''
+                            "
+                            >(excluding {{ li.ModelExcludeNames }})</span
+                          >
+                        </p>
+                      </div>
+                      <div
+                        class="d-flex"
+                        *ngIf="li.Styles != '' && li.Styles != null"
+                      >
+                        <p class="lblcolor">Styles:&nbsp;</p>
+                        <p>{{ li.Styles }}</p>
+                      </div>
+                      <div
+                        class="d-flex"
+                        *ngIf="li.TierValue != '' && li.TierValue != null"
+                      >
+                        <p class="lblcolor">Tier:&nbsp;</p>
+                        <p>{{ li.TierValue }}</p>
+                      </div>
+                      <div
+                        class="d-flex"
+                        *ngIf="li.PerUnit != '' && li.PerUnit != null"
+                      >
+                        <p class="lblcolor">Unit Price:&nbsp;</p>
+                        <p>${{ li.PerUnit | number }} Per Unit</p>
+                      </div>
+                      <div
+                        class="d-flex"
+                        *ngIf="li.MSRP != '' && li.MSRP != null"
+                      >
+                        <p class="lblco lor">MSRP:&nbsp;</p>
+                        <p>{{ li.MSRP }}% MSRP</p>
+                      </div>
+                      <div *ngFor="let ds of DealerSpecificValues[sqn]">
+                        <div class="d-flex">
+                          <div class="d-flex" *ngIf="ds.dealerspecific == 'Y'">
+                            <p class="lblcolor">{{ ds.name }}:&nbsp;</p>
+                            <p>Dealer Will Submit</p>
+                          </div>
+                          <div class="d-flex" *ngIf="ds.dealerspecific == 'N'">
+                            <p class="lblcolor">{{ ds.name }}:&nbsp;</p>
+                            <p *ngIf="ds.prefix != '' && ds.prefix == '%'">
+                              {{ ds.value.toString() | number }}{{ ds.prefix }}
+                            </p>
+                            <!-- <p *ngIf="ds.prefix!='' && ds.prefix =='%' ">{{ds.value.toString() | number}}{{ds.prefix}}</p> -->
+                            <p
+                              *ngIf="
+                                ds.prefix != '' &&
+                                ds.prefix != '%' &&
+                                ds.prefix != undefined
+                              "
+                            >
+                              {{ ds.prefix }}{{ ds.value.toString() | number }}
+                            </p>
+                            <p *ngIf="ds.prefix == undefined && ds.value != ''">
+                              {{ ds.value.toString() }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="showTermDiv" class="my-5 d-flex">
+                  <div
+                    *ngIf="tacdata.length == 0 && TypeOfView == 'E'"
+                    (click)="getIncentiveTermsAndConditions()"
+                    style="cursor: pointer"
+                  >
+                    <a
+                      ><img src="assets/Images/add_white_icon.png" />&nbsp;
+                      Terms & Conditions</a
+                    >
+                  </div>
+                </div>
+
+                <!-- *ngIf="showLineItemsLink" -->
+                <div
+                  class="mt-3 mb-5 d-flex incent"
+                  (click)="ViewLineItems()"
+                  *ngIf="showLineItemsLink && TypeOfView == 'E'"
+                  style="cursor: pointer"
+                >
+                  <a class="mr-auto"
+                    ><img src="assets/Images/add_white_icon.png" /> Details</a
+                  >
+                </div>
+                <div class="d-flex">
+                  <!-- <div *ngIf="isPublish" class="incent"><input value="Publish"  class="save_btn" (click)="openModal('Confrim-modal')"></div> -->
+
+                  <div
+                    *ngIf="viewCancel"
+                    class="incent mr-3"
+                    (click)="cancelEdit()"
+                  >
+                    <input
+                      type="button"
+                      value="Back"
+                      style="border: 1px solid #949393 !important"
+                      class="btn_back"
+                    />
+                  </div>
+                  <div
+                    *ngIf="lineData.length != 0 && TypeOfView == 'E'"
+                    class="incent"
+                  >
+                    <input
+                      type="button"
+                      value="Publish"
+                      class="save_btn"
+                      (click)="openModal('Confrim-modal')"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="col-6 col-lg-6"
+                *ngIf="data && incentiveacceptdata.length != 0"
+              >
+                <div class="mt-3 font-italic">
+                  <div style="text-decoration: underline">Dealers List</div>
+                  <div
+                    *ngIf="incentiveacceptdata.length != 0"
+                    class="dealerslistcls"
+                  >
+                    <div *ngFor="let item of incentiveacceptdata">
+                      <p [ngClass]="{ Active: item.IND_DealerAcept == 'Y' }">
+                        {{ item.dealer_name }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="showTermsandConditions">
+            <div class="row">
+              <div class="col-12">
+                <!-- <app-select-box id="myListBox" [list]="TermsAndConditions" search="true"
+                                          sort="true" selectAll="true" [incentiveid]="incentiveid" [editList]="editTerms"
+                                          (FinalArray)="TermsAndConditionsSave($event)" [incentiveBrand]="_glbBrandId" (TermCancelClick)="BackToEdit()" [incentiveName]="glbIncentiveName" [incentiveType]="glbIncentiveType"></app-select-box> -->
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="showIncentiveLineItems">
+            <!-- <app-drag-n-drop [variablesList]="variablesList" search="true" sort="true" [viewType]="detailViewType" selectAll="true"
+                                      [glbBrandId]="_glbBrandId" [glbIncentiveId]="_glbIncentiveId" [glbLineHdrId]="_glbLineHdrId"
+                                      [glbHdrSeqnId]="_glbLnhdrSeqnId" (xButtonClick)="onDetailsCancel(detailView)" [incentiveName]="glbIncentiveName" [incentiveType]="glbIncentiveType"></app-drag-n-drop> -->
+
+            <!-- <app-drag-n-drop [variablesList]="variablesList" search="true" sort="true"
+                                          selectAll="true" [lineItemsInfo]="lineItemsInfo"
+                                          (xButtonClick)="onDetailsCancel(detailView)"></app-drag-n-drop> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ShowBrand Div -->
+
+  <div *ngIf="showBrand">
+    <div
+      class="modal fade"
+      id="modelId"
+      tabindex="-1"
+      aria-labelledby="modelTitleId"
+      aria-hidden="true"
+      style="left: 20px; top: 11%"
+    >
+      <div
+        class="modal-dialog"
+        role="document"
+        style="max-width: 700px !important"
+        [formGroup]="brandform"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="container px-5">
+              <div class="brand_heading">Brands</div>
+              <div class="row mt-3">
+                <span class="mt-2">Add Brand</span>
+                <span class="ml-3"
+                  ><input
+                    type="text"
+                    class="form-control"
+                    style="height: 32px"
+                    formControlName="txtbrand"
+                    autofocus
+                    (keyup)="OnChangeEvent($event)"
+                    #brand
+                /></span>
+              </div>
+              <div class="row mt-2">
+                <div *ngIf="showBrandAutofill" class="autofillcls" #brandmenu>
+                  <!-- <div *ngFor="let option of selectedBrands ; let i=index"
+                                          (mouseover)="highlightRow(option)"
+                                          [ngClass]="{'highlight' : option.brand_name == selectedItem}">
+                                          <li style="list-style: none;padding: 8px;cursor: pointer;"
+                                              (click)="selectItem($event, option,i)">{{option.brand_name}}</li>
+                                      </div> -->
+                </div>
+                <div *ngIf="selectedBrandsList != ''" class="Brand_Tags">
+                  <div
+                    *ngFor="let item of selectedBrandsList; let i = index"
+                    class="brandtags"
+                  >
+                    <div style="float: left">{{ item.brand_name }}</div>
+                    <img
+                      src="../../assets/Images/cancel-icon.png"
+                      class="closecls"
+                      (click)="
+                        removeBrandTag(item.brand_name, i, item.brand_id)
+                      "
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-4">
+                <div class="col-lg-2" style="margin-left: 165px">
+                  <button
+                    type="submit"
+                    class="savebutton"
+                    style="width: 100px"
+                    (click)="closeModel()"
+                  >
+                    OK
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <jw-modal id="Confrim-modal" style="height:200px;">
+  <div class="text-dark">When you publish you can no longer make changes because this will be distributed to all
+      Dealers</div>
+  <div class="text-center"><input value="Yes" type="button" (click)="Publish()" class="confrim_save mt-5">
+      <input value="No" type="button" class="confrim_save" style="margin-left: 5px;"
+          (click)="closeModal('Confrim-modal')"></div>
+</jw-modal> -->

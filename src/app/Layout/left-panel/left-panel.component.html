@@ -1,0 +1,58 @@
+<div
+  class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 collapse show d-md-flex bg-dark px-0 min-vh-100 nav"
+  id="sidebar"
+>
+  <ul class="nav flex-column flex-nowrap overflow-auto" style="height: 585px">
+    <div *ngFor="let list of Paneldata; let i = index">
+      <li class="nav-item" *ngIf="list.submod != undefined">
+        <a
+          class="nav-link collapsed"
+          [href]="'#submenu' + i"
+          data-toggle="collapse"
+          [attr.data-target]="'#submenu' + i"
+          [class.selected]="CurrentPage == list.modname"
+          (click)="ival(list, i)"
+        >
+          <span class="pr-2"
+            ><img
+              src="{{ fullUrl }}resources/images/{{ list.image }}"
+              width="25px"
+              height="25px"
+          /></span>
+          <span style="color: #ffffff" class="d-none d-sm-inline">{{
+            list.modname
+          }}</span>
+        </a>
+        <div class="submenu" [id]="'submenu' + i" aria-expanded="false">
+          <ul
+            class="flex-column nav"
+            *ngFor="let subitems of list.submod[0].data"
+          >
+            <li class="nav-item">
+              <a
+                class="nav-link py-1"
+                style="cursor: pointer"
+                routerLink="admin/{{ subitems.smod_filename }}"
+                routerLinkActive="active"
+                style="display: true"
+              >
+                <span>{{ subitems.smod_name }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item" *ngIf="list.submod == undefined">
+        <a style="cursor: pointer" class="nav-link collapsed">
+          <span class="pr-2"
+            ><img
+              src="{{ fullUrl }}resources/images/{{ list.image }}"
+              width="25px"
+              height="25px"
+          /></span>
+          <span class="d-none d-sm-inline">{{ list.modname }}</span>
+        </a>
+      </li>
+    </div>
+  </ul>
+</div>

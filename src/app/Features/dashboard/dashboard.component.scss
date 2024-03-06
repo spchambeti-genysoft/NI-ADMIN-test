@@ -1,0 +1,190 @@
+.dashboard_bg {
+  width: 100%;
+  height: auto;
+
+  background: url(../../../assets/images/bg.jpg) no-repeat bottom center;
+  background-size: 100% 100%, cover;
+}
+.grp input {
+  height: 32px;
+  padding: 10px;
+  font-size: 14px;
+  color: #000000;
+  font-family: "Roboto-Medium";
+}
+.grp_det label {
+  color: #a6a6a6;
+  margin-bottom: 0.2rem;
+}
+
+.dash {
+  width: 100%;
+  height: 32px;
+  float: right;
+  margin: 0 0 1rem 0;
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+  overflow: hidden;
+  background: url(../../../assets/images/Arrow1.png) 92% no-repeat #ffffff;
+}
+.dash select {
+  background: transparent;
+  width: 100%;
+  height: 30px;
+  padding: 0 7% 0 5%;
+  float: right;
+  border: 1px solid #ffffff;
+  font-family: "Roboto-Medium";
+  font-size: 13px;
+  color: #000;
+  outline: none;
+  -webkit-appearance: none;
+}
+.dash select option {
+  margin: 40px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+
+
+.HeaderDiv {
+  height: 10%;
+  width: 100%;
+  color: white;
+  // border-radius: 5px;
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.HeaderText {
+  text-align: left;
+  margin-left: 55px;
+}
+
+.logout {
+  height: 40px;
+  margin-left: 351%;
+}
+
+.dashboard_bg {
+  width: 100%;
+  height: auto;
+  background: url(../../../assets/images/bg.jpg) no-repeat bottom center;
+  background-size: 100% 100%, cover;
+}
+
+.grp input {
+  height: 32px;
+  padding: 10px;
+  font-size: 14px;
+  color: #000000;
+  font-family: 'Roboto-Medium';
+  ;
+}
+
+.grp_det label {
+  color: #a6a6a6;
+  margin-bottom: .2rem;
+}
+
+.dash {
+  width: 100%;
+  height: 32px;
+  float: right;
+  margin: 0 0 1rem 0;
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+  overflow: hidden;
+  background: url(../../../assets/images/Arrow1.png) 92% no-repeat #ffffff;
+}
+
+.dash select {
+  background: transparent;
+  width: 100%;
+  height: 30px;
+  padding: 0 7% 0 5%;
+  float: right;
+  border: 1px solid #ffffff;
+  font-family: 'Roboto-Medium';
+  ;
+  font-size: 13px;
+  color: #000;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.dash select option {
+  margin: 40px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+#scroll{
+    width: 100%;
+    height: 350px;
+    overflow-x: hidden;
+}
+
+#scroll::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: #aaa;
+}
+
+
+#scroll::-webkit-scrollbar-thumb {
+  width: 10px;
+  height: 8px;
+  background-color: #577f63;
+}
+
+.brand_style{
+  margin-left: 5%;
+}
+
+.bg-dark{
+background-color: none !important;}
+
+
+.brand_style a {
+  font-size: 14px !important;
+}
+
+.brand_style > .active > a {
+  color: #fff;
+  cursor: pointer;
+}
+
+.DealershipDetails {
+  text-decoration-color: gray;
+  font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif;
+  cursor: pointer;
+}
+
+ .DealershipDetails:hover {
+  color: #00a453 !important;
+}
+
+.submenu ul li a {
+  background: #363636 !important;
+  font-size: 15px !important;
+  padding-left: 62px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+.no-records-container{
+  // color:red;
+  margin: -330px 0px 310px 50px;
+}
+
+.right {
+  border-radius: 6px;
+  position: absolute;
+  background: red;
+  color: white;
+  top: 17px;
+  right: 10px;
+}

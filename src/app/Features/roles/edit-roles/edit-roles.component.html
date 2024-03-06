@@ -1,0 +1,218 @@
+<div class="dashboard_bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="contentpanel_bg col-9 pt-3">
+        <div>
+          <!--                    add Terms start                    -->
+
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"></h3>
+                  </div>
+                  <div class="panel-body">
+                    <form [formGroup]="addRoleForm">
+                      <div class="container">
+                        <div class="row pb-4">
+                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="role">Role:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="RoleDetails.Role_Name"
+                              class="form-control"
+                              placeholder="Enter role"
+                              formControlName="Role_Name"
+                            />
+
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                submitted &&
+                                addRoleForm.controls.Role_Name.hasError(
+                                  'required'
+                                )
+                              "
+                            >
+                              Role is required
+                            </small>
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                submitted &&
+                                addRoleForm.controls.Role_Name.hasError(
+                                  'pattern'
+                                )
+                              "
+                            >
+                              Enter only characters
+                            </small>
+                          </div>
+                        </div>
+
+                        <div class="row pb-4">
+                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="Role_UniqId">Role UniqId:</label>
+                            <input
+                              type="text"
+                              readonly="true"
+                              [(ngModel)]="RoleDetails.Role_UniqId"
+                              class="form-control"
+                              formControlName="Role_UniqId"
+                              placeholder="Enter role uniq id"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="row pb-4">
+                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="Role_Admin">Admin: </label>
+                            <span style="margin-left: 52px"></span>
+                            <input
+                              class="form-check-input"
+                              [(ngModel)]="RoleDetails.Role_Admin"
+                              type="radio"
+                              value="Y"
+                              name="Role_Admin"
+                              formControlName="Role_Admin"
+                            />
+                            <label>Yes</label>
+                            <span style="margin-left: 45px"></span>
+                            <input
+                              class="form-check-input"
+                              [(ngModel)]="RoleDetails.Role_Admin"
+                              type="radio"
+                              value="N"
+                              name="Role_Admin"
+                              formControlName="Role_Admin"
+                            />
+                            <label>No</label>
+
+                            <div>
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  submitted &&
+                                  addRoleForm.controls.Role_Admin.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Admin type is required
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row pb-4">
+                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="Role_Front">Dealer: </label>
+                            <span style="margin-left: 35px"></span>
+                            <input
+                              class="form-check-input"
+                              [(ngModel)]="RoleDetails.Role_Front"
+                              type="radio"
+                              value="Y"
+                              name="Role_Front"
+                              formControlName="Role_Front"
+                            />
+                            <label>Yes</label>
+                            <span style="margin-left: 45px"></span>
+                            <input
+                              class="form-check-input"
+                              [(ngModel)]="RoleDetails.Role_Front"
+                              type="radio"
+                              value="N"
+                              name="Role_Front"
+                              formControlName="Role_Front"
+                            />
+                            <label>No</label>
+
+                            <div>
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  submitted &&
+                                  addRoleForm.controls.Role_Front.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Frontend type is required
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row pb-4" style="display: none">
+                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="Role_Portal">Portal: </label>
+                            <span style="margin-left: 35px"></span>
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="Y"
+                              name="Role_Portal"
+                              formControlName="Role_Portal"
+                            />
+                            <label>Yes</label>
+                            <span style="margin-left: 45px"></span>
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="N"
+                              name="Role_Portal"
+                              formControlName="Role_Portal"
+                            />
+                            <label>No</label>
+                          </div>
+                        </div>
+
+                        <div class="row pb-4">
+                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="status"
+                              >Status:
+                              <input
+                                type="checkbox"
+                                value="RoleDetails.Role_Status"
+                                (change)="handleStatus($event)"
+                                [checked]="RoleDetails.Role_Status == 'Y'"
+                              />
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                          <div class="row">
+                            <div class="col-lg-2">
+                              <input
+                                type="Submit"
+                                class="savebutton"
+                                (click)="updateRoles()"
+                                Value="Save"
+                              />
+                            </div>
+                            <div class="col-lg-2">
+                              <input
+                                type="button"
+                                class="savebutton"
+                                (click)="onCancel()"
+                                Value="Cancel"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--                            add Terms end                    -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

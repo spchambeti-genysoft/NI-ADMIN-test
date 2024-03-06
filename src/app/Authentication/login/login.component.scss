@@ -1,0 +1,177 @@
+.bg {
+  //background: url('http://devadmin.netimpact.com/login_bg.c54ab7b1fde6c6e36d7e.jpg');
+ background: url(../../../assets/Images/login_bg.jpg);
+  background-size: 100% 100%, cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+::-webkit-input-placeholder { /* Edge */
+ color: rgba(255, 255, 255, 0.486);
+}
+
+.keep_signin{
+ float: left;
+ cursor: pointer;
+
+}
+.login-page {
+ width: 360px;
+ padding: 8% 0 0;
+ margin: auto;
+}
+.form {
+ position: relative;
+ z-index: 1;
+ // background:#202020;
+ max-width: 360px;
+ // margin: 0 auto 100px;
+ padding: 45px;
+ margin-top:20% ;
+ margin-left: -17rem;
+ text-align: center;
+}
+.textbox {
+
+ border-radius: 10px;
+ font-family: "Roboto", sans-serif;
+ outline: 0;
+ background: rgb(63, 62, 62);
+ width: 100%;
+ border: 0;
+ margin: 0 0 15px;
+ padding: 10px;
+ box-sizing: border-box;
+ font-size: 14px;
+ text-align: center;
+color: whitesmoke;
+}
+.form button {
+
+ // padding: 2%;
+ height: 35px;
+ width: 50%;
+ text-align: center;
+ color: #fff;
+ // background: #000;
+ // border: 0.5px solid #000;
+
+ // text-transform: uppercase;
+ background:rgba(0, 128, 0, 0.678);
+ // color: white;
+ // width: 50%;
+ // height:10%;
+ border: 0;
+ //  padding: 15px;
+ cursor: pointer;
+ // font-weight: bolder;
+ // filter: brightness(120%);
+ border-style: none;
+ box-shadow: none;
+ // letter-spacing: 2.5px;
+ text-decoration: none;
+
+ cursor: pointer;
+ // font-weight: bolder;
+ filter: brightness(120%);
+ border-style: none;
+ box-shadow: none;
+ // padding-bottom: 12px;
+
+}
+
+.form button:hover
+{
+   background-color:  #00a453;
+
+}
+
+.form .newUser {
+ margin: 15px 0 0;
+ color: #b3b3b3;
+ font-size: 12px;
+}
+
+.container {
+ position: relative;
+ z-index: 1;
+ max-width: 300px;
+ margin: 0 auto;
+}
+
+// .icon {
+//   width: 120px;
+//   height: 60px;
+//   border-radius: 50%;
+//   overflow: hidden;
+//   margin: 0 auto;
+// }
+
+.piped  {
+ content: "|";
+ border-left: 2px solid #616161;
+ padding: 0 2px;
+ position: relative;
+ left: 8px;
+}
+.checkbox label {
+ display: inline-block;
+ padding-right: 0px;
+ color: #00a453;
+ padding-right: 140px;
+}
+input[type=checkbox], input[type=radio] {
+ box-sizing: border-box;
+ padding: 0;
+ color: #00a453;
+ background: #3d404e;
+background-color: yellow;
+
+}
+
+
+.SignInButton{
+ background-image: linear-gradient(to bottom right, #029e4d, #0b7f40) !important;
+}
+
+
+// .checkbox input:checked ~ .checkmark {​​​​​​​​
+//   background-color : green ;
+// }​​​​​​​​
+
+
+
+// input.largerCheckbox {
+//   transform : scale(1.5);
+// }
+
+
+.valid{
+ padding-top: 0px;
+ padding-bottom: 12px;
+ color: red !important;
+}
+
+.IconImg{
+   width: 260px;
+   margin-bottom: 5%;
+}
+
+.errormsg{
+ color: red;
+}
+
+
+// .check {
+//   width:100%;margin:0 0 0 15px;display: block;position: relative;cursor: pointer;font-size: 11px;
+//   color: #000;font-family: 'Gotham\ Book\ Regular';;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;padding: 2px;
+//  }
+//  .check input {position: absolute;opacity: 0;cursor: pointer;height: 0;width: 0;}
+//  .checkmark {position: absolute;top: 3px; margin-left: -20px; height: 15px;width: 15px;background-color: #1a262e;border: 1px solid #30a5d1;border-radius: 3px;}
+//  .check:hover input ~ .checkmark {background-color: green;}
+//  .check input:checked ~ .checkmark {background-color:green;}
+//  .checkmark:after {width:2px; height:7px; left:4px; top:1px; content: "";position: absolute; display: none;}
+//  .check input:checked ~ .checkmark:after {display: block;}
+//  .check .checkmark:after { width: 5px;height: 9px;left: 4px;top: 1px;border: green;border-width: 0 2px 2px 0;-webkit-transform: rotate(45deg);
+//  -ms-transform: rotate(45deg);transform: rotate(45deg);}

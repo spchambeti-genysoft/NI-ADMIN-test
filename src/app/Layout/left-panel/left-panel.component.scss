@@ -1,0 +1,168 @@
+.fa-cloud-download,
+.fa-envelope,
+.fa-volume-control-phone,
+.fa-cogs,
+.fa-car {
+  float: left;
+  padding-right: 15px;
+  padding-left: 10px;
+}
+.fa-angle-right {
+  float: right;
+  padding-right: 5px;
+  padding-left: 10px;
+}
+
+p,
+ul,
+li,
+div,
+nav {
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: Calibri;
+}
+#menu {
+  overflow: auto;
+  position: relative;
+  z-index: 2;
+}
+.parent-menu {
+  background-color: #0c0d0e;
+  color: whitesmoke;
+  min-width: 200px;
+  float: left;
+  padding: 20px 10px 20px 10px;
+
+  height: 100%;
+}
+
+#menu ul {
+  list-style-type: none;
+}
+
+#menu ul li ul li {
+  text-align: center;
+}
+
+#menu ul li a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+
+#menu ul li a:hover {
+  color: whitesmoke;
+}
+#menu ul li:hover > ul {
+  left: 200px;
+  -webkit-transition: left 200ms ease-in;
+  -moz-transition: left 200ms ease-in;
+  -ms-transition: left 200ms ease-in;
+  transition: left 200ms ease-in;
+}
+#menu ul li > ul {
+  position: absolute;
+  background-color: #333;
+  top: 0;
+  left: -200px;
+  min-width: 200px;
+  z-index: -1;
+  //    height: 100%;
+  -webkit-transition: left 200ms ease-in;
+  -moz-transition: left 200ms ease-in;
+  -ms-transition: left 200ms ease-in;
+  transition: left 200ms ease-in;
+}
+#menu ul li > ul li a:hover {
+  background-color: #00a453;
+  color: whitesmoke;
+}
+
+#menu ul li > ul li.active {
+  background-color: #4caf50;
+  color: whitesmoke;
+}
+
+.dropdown-menu{
+
+  width: 100%;
+  background-color:#585757;
+  padding:0px;
+  margin:-4px;
+  border-radius: 0px;
+  border: 1px solid rgb(0, 164, 83);
+  }
+  .dropdown-menu a{
+  padding:.5rem !important;
+
+  }
+  .dropdown-toggle::after{
+  margin-left:.9rem !important;
+  }
+
+  .nav-item{
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .selected{
+    background:#00a453;
+     color: #fff;
+  }
+  .submenu{display:visibility; position: relative; background:#363636 !important; font-size: 15px; }
+
+  .submenu ul li a {
+    background: #363636 !important;
+    font-size: 15px;
+    padding-left: 62px;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+
+.bg {
+  background: url(../../../assets/Images/bg.jpg) no-repeat bottom center;
+    height: 100%;
+    background-size:cover;
+    -webkit-animation: slidein 10s;
+    animation: slidein 10s;
+
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+  }
+
+  .main{
+    position: absolute;
+    top: 5rem;
+  }
+
+  .app-main {
+    max-width: auto;
+    position: relative;
+    z-index: 2;
+    color: inherit;
+    margin: 0.5rem;
+    min-height: 800px;
+  }
+
+//   .mat-drawer {
+//     position: relative;
+//   }
+
+//   .mat-drawer-container {
+//     background-color: #323131;
+//     color: rgba(0,0,0,.87);
+// }

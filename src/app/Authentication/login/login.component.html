@@ -1,0 +1,106 @@
+<div class="bg">
+  <div class="login-page">
+    <div class="form">
+      <div class="icon">
+        <img class="IconImg" src="http://netimpact.com/niblack.png" alt="" />
+      </div>
+      <br />
+      <form
+        class="login-form"
+        #form="ngForm"
+        (ngSubmit)="form.valid && login()"
+        novalidate
+      >
+        <div class="form-group">
+          <input
+            class="form-control textbox"
+            type="email"
+            placeholder="Username"
+            name="username"
+            [(ngModel)]="username"
+            #email="ngModel"
+            [ngClass]="{ 'is-invalid': form.submitted && email.invalid }"
+            required
+            email
+          />
+          <div *ngIf="form.submitted && email.invalid" class="text-white">
+            <div class="errormsg" *ngIf="email.errors" class="valid">
+              Username is required
+            </div>
+            <div class="errormsg" *ngIf="email.errors" class="valid">
+              Email must be a valid email address
+            </div>
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control textbox"
+              type="password"
+              placeholder="Password"
+              name="password"
+              [(ngModel)]="password"
+              #pwd="ngModel"
+              [ngClass]="{ 'is-invalid': form.submitted && pwd.invalid }"
+              required
+              minlength="4"
+            />
+            <div
+              *ngIf="form.submitted && pwd.invalid"
+              class="text-white text-start"
+            >
+              <div class="errormsg" *ngIf="pwd.errors">
+                Password is required
+              </div>
+              <div class="errormsg" *ngIf="pwd.errors">
+                Password must be at least 6 characters
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="form-group"
+          style="display: block; margin-top: 2px; margin-top: 8px"
+        >
+          <div class="keep_signin">
+            <label
+              class="checkbox-inline"
+              style="cursor: pointer; color: white"
+            >
+              <input
+                type="checkbox"
+                class="largerCheckbox"
+                checked="rememberme"
+                [(ngModel)]="rememberme"
+                name="check"
+              />&nbsp;&nbsp;&nbsp;<span class="checkmark"></span>Keep me logged
+              in</label
+            >
+
+            <span class="piped">&nbsp;&nbsp;&nbsp;</span>
+          </div>
+
+          <div class="forgot" style="cursor: pointer" (click)="openDialog()">
+            <a style="color: green; text-decoration: underline"
+              >Forgot password?</a
+            >
+          </div>
+        </div>
+        <div class="form-group" style="text-align: center">
+          <button class="btn SignInButton" [disabled]="loading">
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm mr-1"
+            ></span>
+            Sign in
+          </button>
+        </div>
+        <!-- <button>login</button>
+      <p class="newUser"><a>New Registration</a></p> -->
+
+        <!-- <div class="checkbox">
+          <label for="chkRem"><input type="checkbox" id="chkRem" /> &nbsp;<span>Remember me</span></label>
+        </div> -->
+      </form>
+    </div>
+  </div>
+</div>

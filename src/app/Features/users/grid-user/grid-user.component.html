@@ -1,0 +1,364 @@
+<div class="dashboard_bg">
+  <div class="container-fluid">
+    <div class="col-12 col-lg-12 backgroundBorder">
+      <form [formGroup]="SearchUsersForm">
+        <div class="row style_head">
+          <div class="col-12 col-lg-6 d-flex align-items-center pl-lg-2">
+            <h4>Dealer Admin Users</h4>
+            <a
+              [routerLink]="['/admin/addusers']"
+              routerLinkActive="router-link-active"
+              class="pointer"
+              ><img
+                src="assets/Images/add_white_icon.png"
+                matTooltip="Add dealer admin users"
+            /></a>
+          </div>
+
+          <div
+            class="col-12 col-lg-6 d-flex align-items-center justify-content-end"
+          >
+            <div>
+              <div
+                class="d-flex"
+                style="width: 80px; cursor: pointer"
+                (click)="atoZClick()"
+              >
+                <div class="DivAZ1">A - Z</div>
+                <div class="DivAZ2">
+                  <a><img src="assets/Images/sorting_img.png" /></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="search">
+              <input
+                type="text"
+                placeholder="Search"
+                formControlName="txtSearch"
+                autofocus
+                (keyup)="onSearch()"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div
+            class="row"
+            *ngIf="atozFltr"
+            style="height: 50px; margin-bottom: 10px"
+          >
+            <div style="width: 100%">
+              <app-atoz-filter
+                (onAlphaClick)="onAlphaCatch($event)"
+              ></app-atoz-filter>
+            </div>
+          </div>
+
+          <div *ngIf="dataSource.data.length == 0" class="noDataAvailable">
+            No Dealer Admin Users Availabl
+          </div>
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="UserInfo">
+              <ng-container matColumnDef="PROFILE IMAGE">
+                <th mat-header-cell *matHeaderCellDef>PROFILE IMAGE</th>
+                <td mat-cell *matCellDef="let element">
+                  <img
+                    src="{{ element.User_Profileimage }}"
+                    height="50"
+                    width="50"
+                    onerror="this.src='../../../assets/Images/default.png'"
+                    style="padding: 5px"
+                  />
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="NAME">
+                <th mat-header-cell *matHeaderCellDef>NAME</th>
+                <td mat-cell *matCellDef="let element">
+                  <span>
+                    <span class="gridname"
+                      >{{ element.User_Firstname }}
+                      {{ element.User_Lastname }} </span
+                    ><br />
+                    <span class="RoleName">{{ element.User_RoleName }}</span>
+                  </span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="EMAIL">
+                <th mat-header-cell *matHeaderCellDef>EMAIL</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.User_Email }}>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="STATUS">
+                <th mat-header-cell *matHeaderCellDef>STATUS</th>
+                <td mat-cell *matCellDef="let element">
+                  <span
+                    *ngIf="element.User_Status === 'Y'; else elseBlock"
+                    style="width: 100px"
+                  >
+                    <div class="Active">
+                      <span>Active</span>
+                    </div>
+                  </span>
+
+                  <ng-template #elseBlock>
+                    <div class="InActive">
+                      <span>Inactive</span>
+                    </div>
+                  </ng-template>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ACTIONS">
+                <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon (click)="Action(element)">edit</mat-icon>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+
+            <mat-paginator
+              [pageSizeOptions]="[10, 20, 50]"
+              showFirstLastButtons
+            >
+            </mat-paginator>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="dashboard_bg">
+  <div class="container-fluid">
+    <div class="col-12 col-lg-12 backgroundBorder" >
+    <div class="row">
+      <div class="content_body">
+      <form [formGroup]="SearchUsersForm">
+        <table style="width: 1000px; float: left">
+          <tbody>
+            <tr>
+              <td></td>
+              <td style="vertical-align: top">
+
+                <table class="gridheader">
+                  <thead>
+                      <tr>
+                          <th style="width: 462px; font-weight: bold;">
+                            <div style="float: left">
+                                <div class="getuser">
+                                    <h2>Dealer Admin Users</h2>
+                                </div>
+                                <div class="AddIcon">
+                                  <a
+                                  [routerLink]="['/admin/addusers']"
+                                  routerLinkActive="router-link-active"
+                                  style="cursor: pointer;"
+                                  ><img src="assets/Images/brand_plus.png" matTooltip="Add dealer admin users"></a>
+                                </div>
+                            </div>
+                          </th>
+                          <th style="width: 500px; text-align: center">
+                            <div style="float: left">
+                            </div>
+                        </th>
+
+                        <th style="width:10%; text-align: center" colspan="2">
+                          <div style="width: 80px; cursor: pointer" (click)="atoZClick()">
+                            <div class="DivAZ1">A - Z</div>
+                            <div class="DivAZ2">
+                              <a><img src="assets/Images/sorting_img.png" /></a>
+                            </div>
+                          </div>
+                        </th>
+                        <th style="padding-left: 0px;">
+                          <div class="search">
+                              <input type="text" formControlName="txtSearch" placeholder="Search" autofocus (keyup)="onSearch()">
+                          </div>
+                          <div style="float: right; margin-top: -22px; margin-right: 6px;"><img src="assets/Images/Search-Icon.png"></div>
+                      </th>
+                      </tr>
+                  </thead>
+              </table>
+              <div class="row" *ngIf="atozFltr" style="height: 50px; margin-bottom: 10px">
+                <div style="width: 100%">
+                  <app-atoz-filter (onAlphaClick)="onAlphaCatch($event)"></app-atoz-filter>
+                </div>
+              </div>
+
+              <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="UserInfo">
+
+                  <ng-container matColumnDef="PROFILE IMAGE">
+                    <th mat-header-cell *matHeaderCellDef> PROFILE IMAGE</th>
+                    <td mat-cell *matCellDef="let element">
+                      <img src="{{element.User_Profileimage}}" height="50" width="50" onerror="this.src='../../../assets/Images/default.png'" style="padding: 5px;">
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="NAME">
+                    <th mat-header-cell *matHeaderCellDef> NAME </th>
+                    <td mat-cell *matCellDef="let element">
+                      <span>
+                            <span class="gridname">{{element.User_Firstname}} {{element.User_Lastname}} </span><br>
+                            <span class="RoleName">{{element.User_RoleName}}</span>
+                      </span></td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="EMAIL">
+                    <th mat-header-cell *matHeaderCellDef> EMAIL </th>
+                    <td mat-cell *matCellDef="let element"> {{element.User_Email}}></td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="STATUS">
+                    <th mat-header-cell *matHeaderCellDef> STATUS </th>
+                    <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.User_Status === 'Y'; else elseBlock" style="width: 100px">
+                      <div class="Active">
+                        <span>Active</span>
+                      </div>
+                    </span>
+
+                    <ng-template #elseBlock>
+                        <div class="InActive">
+                          <span>Inactive</span>
+                        </div>
+                    </ng-template>
+                  </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ACTIONS">
+                    <th mat-header-cell *matHeaderCellDef> ACTIONS </th>
+                    <td mat-cell *matCellDef="let element">
+                         <mat-icon (click)="Action(element)">edit</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+                               showFirstLastButtons>
+                </mat-paginator>
+              </div> -->
+<!-- <table class="dashboard">
+                    <thead>
+                      <tr class="colHeader" style="width: 100%;">
+                        <th style="width: 1%"></th>
+                        <th
+                          align="center"
+                          scope="col"
+                          style="width: 15%; text-align: left"
+                        >
+                        Profile Image
+                        </th>
+                        <th
+                          align="center"
+                          scope="col"
+                          style="width: 12%; text-align: center"
+                        >
+                        Name
+                        </th>
+                        <th
+                          align="center"
+                          scope="col"
+                          style="width: 45%; text-align: center"
+                        >
+                        Email
+                        </th>
+                        <th
+                          align="center"
+                          scope="col"
+                          style="width: 20%; text-align: center"
+                        >
+                          Status
+                        </th>
+
+                        <th scope="col" style="width: 37px">&nbsp;</th>
+                      </tr>
+                    </thead>
+                  </table> -->
+<!-- <div class="col-md-8" style="padding-left: 0px">
+                    <div class="contentss"> -->
+<!-- <table class="dashboard">
+                        <tbody>
+                          <ng-container *ngIf="UserInfo | alphaFilter : alphaSrch: alphaColumns :'inventory' as Usersdata; else noItems">
+                          <tr *ngFor="let list of Usersdata">
+                            <td style="width: 120px;">
+                              <div style="text-align: center;">
+                                <img src="{{list.User_Profileimage}}" height="100"
+                                    width="100"
+                                    onerror="this.src='../../../assets/Images/default.png'" />
+                            </div>
+                            </td>
+
+                            <td style="width: 100px;">
+                              <div style="margin-left: 10px;">
+                                <span> <div class="gridname">{{list.User_Firstname}} {{list.User_Lastname}}</div>
+                                   <br>
+
+                                <div class="RoleName">{{list.User_RoleName}}</div>
+                                </span>
+                              </div>
+                            </td>
+                            <td style="width: 100px;">
+                              <div style="text-align: left;"><span
+                                      style="font-size: 15px; margin-left: 150px;">{{list.User_Email}}</span>
+                              </div>
+                          </td>
+
+                          <td
+                              *ngIf="list.User_Status === 'Y'; else elseBlock"
+                              style="width: 100px"
+                            >
+                              <div class="Active" style="text-align: left">
+                                <span>Active</span>
+                              </div>
+                            </td>
+
+                            <ng-template #elseBlock>
+                              <td style="width: 100px">
+                                <div
+                                  class="InActive"
+                                  style="text-align: left"
+                                >
+                                  <span>Inactive</span>
+                                </div>
+                              </td>
+                            </ng-template>
+
+
+                            <td align="center" style="width: 37px; cursor: pointer;">
+                              <a (click)="Action(list)"
+                                ><img src="assets/Images/edt_icon.png"
+                              /></a>
+                            </td>
+                          </tr>
+                          <ng-container *ngIf="!Usersdata.length || hide" [ngTemplateOutlet]="noItems"></ng-container>
+                        </ng-container>
+                        <ng-template #noItems>
+                              <tr><td colspan="9" style="text-align: center;">No Dealer Admin Users Available</td></tr>
+                        </ng-template>
+                        </tbody>
+                      </table> -->
+<!-- </div>
+                  </div> -->
+<!-- </td>
+            </tr>
+          </tbody>
+        </table>
+       </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</div> -->

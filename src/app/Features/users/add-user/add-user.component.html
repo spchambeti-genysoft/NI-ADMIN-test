@@ -1,0 +1,550 @@
+<div class="dashboard_bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-9 pt-3">
+        <div class="contentpanel_bg">
+          <!----------   rolesgrid start -------  -->
+
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+                      <div class="col-12">
+                        <div class="row">
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group">
+                              <label> First Name</label>
+                              <input
+                                type="text"
+                                formControlName="User_Firstname"
+                                placeholder="First Name"
+                                class="form-control"
+                                maxlength="51"
+                                autofocus
+                              />
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  submitted &&
+                                  addUserForm.controls.User_Firstname.hasError(
+                                    'required'
+                                  )
+                                "
+                                >First name is required
+                                <br />
+                              </small>
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  addUserForm.controls.User_Firstname.hasError(
+                                    'pattern'
+                                  )
+                                "
+                              >
+                                Only alphabets are allowed for First name
+                                <br />
+                              </small>
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  addUserForm.controls.User_Firstname.hasError(
+                                    'maxlength'
+                                  )
+                                "
+                              >
+                                You have reached your maximum limit of
+                                characters allowed for First name
+                              </small>
+                            </div>
+                          </div>
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group">
+                              <label>Last Name</label>
+                              <input
+                                type="text"
+                                formControlName="User_Lastname"
+                                placeholder="Last Name"
+                                class="form-control"
+                                maxlength="51"
+                                autofocus
+                              />
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  submitted &&
+                                  addUserForm.controls.User_Lastname.hasError(
+                                    'required'
+                                  )
+                                "
+                                >Last name is required
+                                <br />
+                              </small>
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  addUserForm.controls.User_Lastname.hasError(
+                                    'pattern'
+                                  )
+                                "
+                              >
+                                Only alphabets are allowed for Last name
+                                <br />
+                              </small>
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  addUserForm.controls.User_Lastname.hasError(
+                                    'maxlength'
+                                  )
+                                "
+                              >
+                                You have reached your maximum limit of
+                                characters allowed for Last name
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group">
+                              <label>Email</label>
+                              <input
+                                type="text"
+                                formControlName="User_Email"
+                                placeholder="Email"
+                                class="form-control"
+                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$"
+                                autofocus
+                              />
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  submitted &&
+                                  addUserForm.controls.User_Email.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Email is required
+                              </small>
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  addUserForm.controls.User_Email.hasError(
+                                    'pattern'
+                                  )
+                                "
+                              >
+                                Invalid Email Address
+                              </small>
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group">
+                              <label>Password</label>
+                              <input
+                                type="password"
+                                formControlName="User_Password"
+                                placeholder="Password"
+                                class="form-control"
+                                maxlength="7"
+                                autofocus
+                              />
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  submitted &&
+                                  addUserForm.controls.User_Password.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Password is required
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group">
+                              <label>Address</label>
+                              <input
+                                type="text"
+                                formControlName="User_Address"
+                                placeholder="Address"
+                                class="form-control"
+                                maxlength="1001"
+                                autofocus
+                              />
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  submitted &&
+                                  addUserForm.controls.User_Address.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Address is required
+                              </small>
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  addUserForm.controls.User_Address.hasError(
+                                    'maxlength'
+                                  )
+                                "
+                              >
+                                You have reached your maximum limit of
+                                characters allowed for Address
+                              </small>
+                            </div>
+                          </div>
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group">
+                              <label>Map Address Link</label>
+                              <input
+                                type="text"
+                                formControlName="User_Mapaddresslink"
+                                placeholder="Map Address Link"
+                                class="form-control"
+                                maxlength="101"
+                                autofocus
+                              />
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  submitted &&
+                                  addUserForm.controls.User_Mapaddresslink.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Map Address Link is required
+                              </small>
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  addUserForm.controls.User_Mapaddresslink.hasError(
+                                    'maxlength'
+                                  )
+                                "
+                              >
+                                You have reached your maximum limit of Map
+                                Address Link
+                              </small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group">
+                              <label>Phone Number</label>
+                              <input
+                                type="text"
+                                formControlName="User_Phone"
+                                placeholder="Phone Number"
+                                class="form-control"
+                                pattern="[0-9+( )-]{14}$"
+                                autofocus
+                              />
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  submitted &&
+                                  addUserForm.controls.User_Phone.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Phone is required
+                              </small>
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group">
+                              <label>Role ID</label>
+                              <div class="dash">
+                                <select
+                                  formControlName="User_Roleid"
+                                  class="form-control"
+                                >
+                                  <option value="">Select Role</option>
+                                  <option
+                                    *ngFor="let list of rolesArray"
+                                    [value]="list.Role_UniqId"
+                                  >
+                                    {{ list.Role_Name }}
+                                  </option>
+                                </select>
+                              </div>
+
+                              <small
+                                class="errormessage"
+                                *ngIf="
+                                  submitted &&
+                                  addUserForm.controls.User_Roleid.hasError(
+                                    'required'
+                                  )
+                                "
+                              >
+                                Role ID is required
+                              </small>
+
+                              <!-- <div>
+                              <div class="form-group  drop_dwn">
+                                <select formControlName="year" class="drop" >
+                                  <option value="2020">2020</option>
+                                  <option *ngFor="let list of rolesArray">{{list.Role_Name}}</option>
+                                </select>
+                              </div>
+                            </div>
+             -->
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group">
+                              <div class="row" style="display: none">
+                                <div class="col-xs-3 col-sm-3 col-md-3">
+                                  <label for="User_IsAdmin">IsAdmin:</label>
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                  <div class="form-group">
+                                    <span>
+                                      <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        value="Y"
+                                        name="User_IsAdmin"
+                                        formControlName="User_IsAdmin"
+                                        checked
+                                      />
+                                      <label for="yes">yes</label>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div class="col-xs-5 col-sm-5 col-md-5">
+                                  <div class="form-group">
+                                    <span>
+                                      <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        value="N"
+                                        name="User_IsAdmin"
+                                        formControlName="User_IsAdmin"
+                                      />
+                                      <label for="no">no</label>
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group">
+                              <div class="row usertype">
+                                <div class="col-xs-3 col-sm-3 col-md-3">
+                                  <label for="User_Type">User Type:</label>
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                  <div class="form-group">
+                                    <span>
+                                      <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        value="A"
+                                        name="User_Type"
+                                        formControlName="User_Type"
+                                        checked="true"
+                                      />
+                                      <label for="yes">yes</label>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div class="col-xs-5 col-sm-5 col-md-5">
+                                  <div class="form-group">
+                                    <span>
+                                      <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        value="F"
+                                        name="User_Type"
+                                        formControlName="User_Type"
+                                      />
+                                      <label for="no">no</label>
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group"></div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div
+                            class="col-12 col-sm-4 col-md-6 col-lg-6 col-xl-6"
+                            *ngIf="showGroupsDropDown == true"
+                          >
+                            <div class="formgroup grp grp_det">
+                              <label>Dealer Group</label>
+
+                              <select
+                                class="form-control"
+                                formControlName="User_Dealer_Group_ID"
+                                (change)="getdealergroup($event)"
+                              >
+                                <option value="">Select Dealer Group</option>
+                                <option
+                                  *ngFor="let d of dealerNames"
+                                  [value]="d.dg_id"
+                                >
+                                  {{ d.dg_name }}
+                                </option>
+                              </select>
+                              <div
+                                *ngIf="
+                                  !addUserForm.controls.User_Dealer_Group_ID
+                                    .valid &&
+                                  (addUserForm.controls.User_Dealer_Group_ID
+                                    .dirty ||
+                                    submitted)
+                                "
+                                class="error"
+                              >
+                                <div
+                                  *ngIf="
+                                    addUserForm.controls.User_Dealer_Group_ID
+                                      .errors.required
+                                  "
+                                >
+                                  Dealer Group is required
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"
+                          >
+                            <div class="form-group">
+                              <!-- <label>Profile Image</label> -->
+
+                              <img
+                                src="assets/Images/prof_img_dwn.png"
+                                (click)="selectFile.click()"
+                              />
+                              <input
+                                style="display: none"
+                                type="file"
+                                name="image"
+                                formControlName="fileUpload"
+                                (change)="processFile($event)"
+                                #selectFile
+                                accept=".jpg,.jpeg,.png"
+                              />
+                              <div *ngIf="fileUploadProgress">
+                                Upload progress: {{ fileUploadProgress }}
+                              </div>
+                              &nbsp;
+                              <div
+                                style="display: contents"
+                                class="image-preview"
+                                *ngIf="previewUrl"
+                              >
+                                <img
+                                  [src]="previewUrl"
+                                  height="70"
+                                  width="100"
+                                />
+                              </div>
+
+                              <div *ngIf="uploadedFilePath">
+                                {{ uploadedFilePath }}
+                              </div>
+
+                              <div>
+                                <!-- <small class="errormessage" *ngIf="submitted && addUserForm.controls.fileUpload.hasError('required')">
+                                  Profile Image is required
+                                </small> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                        <div class="row">
+                          <div class="col-lg-2">
+                            <input
+                              type="submit"
+                              value="Save"
+                              class="savebutton"
+                            />
+                          </div>
+                          <div class="col-lg-2">
+                            <input
+                              type="button"
+                              value="Cancel"
+                              [routerLink]="['/admin/adminusers']"
+                              routerLinkActive="router-link-active"
+                              class="savebutton"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                          <input type="submit" value="Save" class="savebutton" /> &nbsp;
+                          <input type="button" value="Cancel" [routerLink]="['/users']" routerLinkActive="router-link-active" class="savebutton" />
+                        </div>
+
+                      </div> -->
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!----------   rolesgrid end -------  -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

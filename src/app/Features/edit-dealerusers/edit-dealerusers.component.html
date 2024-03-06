@@ -1,0 +1,552 @@
+<div>
+  <div class="dashboard_bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-9 pt-3 ml-3 mt-3 contentpanel_bg">
+          <div class="ml-4">
+            <form [formGroup]="dshipForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup">
+                    <label>First Name</label>
+                    <input
+                      type="text"
+                      [(ngModel)]="fname"
+                      class="form-control"
+                      maxlength="48"
+                      formControlName="FirstName"
+                      autofocus
+                    />
+
+                    <div
+                      *ngIf="submitted &amp;&amp; dshipForm.controls.FirstName.errors"
+                      class="text-danger"
+                    >
+                      <div *ngIf="dshipForm.controls.FirstName.errors.required">
+                        FirstName is required
+                      </div>
+                      <div *ngIf="dshipForm.controls.FirstName.errors.pattern">
+                        FirstName must be String
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup">
+                    <label>Last Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="lname"
+                      maxlength="48"
+                      formControlName="LastName"
+                    />
+                  </div>
+
+                  <div
+                    *ngIf="submitted &amp;&amp; dshipForm.controls.LastName.errors"
+                    class="text-danger"
+                  >
+                    <div *ngIf="dshipForm.controls.LastName.errors.required">
+                      LastName is required
+                    </div>
+                    <div *ngIf="dshipForm.controls.LastName.errors.pattern">
+                      LastName must be String
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Gender</label>
+                    <select
+                      class="form-control"
+                      [(ngModel)]="dealergender"
+                      formControlName="Gender"
+                    >
+                      <option value="">Select Gender</option>
+                      <option *ngFor="let g of gender" [value]="g.value">
+                        {{ g.group }}
+                      </option>
+                    </select>
+
+                    <div
+                      *ngIf="submitted &amp;&amp; dshipForm.controls.Gender.errors"
+                      class="text-danger"
+                    >
+                      <div *ngIf="dshipForm.controls.Gender.errors.required">
+                        Gender is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Job Title</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="48"
+                      formControlName="JobTitle"
+                      [(ngModel)]="job"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Email Id</label>
+                    <input
+                      type="text"
+                      [(ngModel)]="login"
+                      class="form-control"
+                      maxlength="48"
+                      formControlName="loginId"
+                    />
+
+                    <div
+                      *ngIf="submitted &amp;&amp; dshipForm.controls.loginId.errors"
+                      class="text-danger"
+                    >
+                      <div *ngIf="dshipForm.controls.loginId.errors.required">
+                        EmailId is required
+                      </div>
+                      <div *ngIf="dshipForm.controls.loginId.errors.pattern">
+                        EmailId must be a valid email
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <input
+                      type="button"
+                      value="Change Password"
+                      class="changepwd"
+                      (click)="openDialog()"
+                      style="margin-top: 44px"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Date of Joining</label>
+                    <input
+                      type="date"
+                      id="jdate"
+                      name="jdate"
+                      [(ngModel)]="jdate"
+                      class="form-control"
+                      maxlength="48"
+                      formControlName="DateofJoining"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Date of birth</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      maxlength="48"
+                      [(ngModel)]="dateofbirth"
+                      formControlName="Dob"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Address1</label>
+                    <input
+                      type="text"
+                      [(ngModel)]="address1"
+                      class="form-control"
+                      maxlength="48"
+                      formControlName="Address1"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Address2</label>
+                    <input
+                      type="text"
+                      [(ngModel)]="address2"
+                      class="form-control"
+                      maxlength="48"
+                      formControlName="Address2"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>City</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="city"
+                      maxlength="48"
+                      formControlName="City"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>State</label>
+                    <select
+                      class="form-control"
+                      formControlName="State"
+                      [(ngModel)]="dealerUsersArry.Du_State"
+                    >
+                      <option value="">Select State</option>
+                      <option *ngFor="let i of states" [value]="i.sg_id">
+                        {{ i.sg_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Zip Code</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="dealerUsersArry.Du_Zip"
+                      maxlength="48"
+                      formControlName="Zip"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Phone</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="15"
+                      [(ngModel)]="dealerUsersArry.Du_Phone"
+                      formControlName="Phone"
+                      pattern="[0-9+( )-]{14}$"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>User Type</label>
+                    <div class="formgroup grp grp_det"></div>
+                    <input
+                      type="radio"
+                      name="usertype"
+                      formControlName="usertype"
+                      [(ngModel)]="getusertype"
+                      value="G"
+                      (change)="onChangeRadioBtn($event)"
+                    />&nbsp; <label>DealerGroup</label>&nbsp;
+                    <input
+                      type="radio"
+                      name="usertype"
+                      formControlName="usertype"
+                      [(ngModel)]="getusertype"
+                      value="D"
+                      (change)="onChangeRadioBtn($event)"
+                    />&nbsp;
+                    <label>DealerShip</label>
+
+                    <div
+                      *ngIf="
+                        !dshipForm.controls.usertype.valid &&
+                        (dshipForm.controls.usertype.dirty || submitted)
+                      "
+                      class="error"
+                    >
+                      <div *ngIf="dshipForm.controls.usertype.errors.required">
+                        User type is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Role</label>
+
+                    <select
+                      class="form-control"
+                      [(ngModel)]="dealerUsersArry.Du_Role"
+                      formControlName="Role"
+                      (change)="getdealershipDropdownDisable($event)"
+                    >
+                      <option value="">Select Role</option>
+                      <option
+                        *ngFor="let r of rolesArray"
+                        [value]="r.Role_UniqId"
+                      >
+                        {{ r.Role_Name }}
+                      </option>
+                    </select>
+
+                    <div
+                      *ngIf="submitted &amp;&amp; dshipForm.controls.Role.errors"
+                      class="text-danger"
+                    >
+                      <div *ngIf="dshipForm.controls.Role.errors.required">
+                        Role is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                        <div class="formgroup grp grp_det">
+                            <label>DealarShip</label>
+
+                            <select class="form-control"  formControlName="dealeruser" >
+                                <option value="">Select DealerShip</option>
+                                <option *ngFor="let d of dealerNames" [value]="d.dealer_id">{{d.dealer_name}}</option>
+
+                                </select>
+
+                          <div *ngIf="submitted &amp;&amp; dshipForm.controls.dealeruser.errors" class="text-danger">
+                              <div *ngIf="dshipForm.controls.dealeruser.errors.required">dealeruser  is required</div>
+                           </div>
+                        </div>
+                    </div> -->
+              </div>
+              <div class="row pt-1">
+                <!-- <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                      <div class="formgroup grp grp_det">
+                          <label>DealarShip</label>
+
+                          <select class="form-control"  formControlName="dealeruser" [(ngModel)]="dealerUsersArry.Du_Dealer_Id">
+                              <option value="">Select DealerShip</option>
+                              <option *ngFor="let d of dealerNames" [value]="d.dealer_id">{{d.dealer_name}}</option>
+
+                              </select>
+
+                        <div *ngIf="submitted &amp;&amp; dshipForm.controls.dealeruser.errors" class="text-danger">
+                            <div *ngIf="dshipForm.controls.dealeruser.errors.required">dealeruser  is required</div>
+                         </div>
+                      </div>
+                  </div> -->
+
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Dealer Group</label>
+
+                    <select
+                      class="form-control"
+                      formControlName="dealeruser"
+                      [(ngModel)]="dealerUsersArry.Du_Dealer_Group_Id"
+                      (change)="getdealergroup($event)"
+                    >
+                      <option value="">Select Dealer Group</option>
+                      <option *ngFor="let d of dealerNames" [value]="d.dg_id">
+                        {{ d.dg_name }}
+                      </option>
+                    </select>
+                    <div
+                      *ngIf="
+                        !dshipForm.controls.dealeruser.valid &&
+                        (dshipForm.controls.dealeruser.dirty || submitted)
+                      "
+                      class="error"
+                    >
+                      <div
+                        *ngIf="dshipForm.controls.dealeruser.errors.required"
+                      >
+                        Dealer User is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4"
+                  *ngIf="showDealerShipDropDown"
+                >
+                  <div class="formgroup grp grp_det">
+                    <label>DealerShip</label>
+
+                    <!-- <select class="form-control" formControlName="dealershipuser"  [(ngModel)]="dealerUsersArry.Du_Dealer_Id" disabled>
+                              <option value="0">Select DealerShip</option>
+                              <option *ngFor="let d of dealershipNames" [value]="d.dealer_id">{{d.dealer_name}}</option>
+                          </select> -->
+                    <!-- <angular2-multiselect formControlName="dealershipuser"
+                          style="cursor: pointer; text-align: left; color:black" [data]="dealershipsList"
+                          [(ngModel)]="dealershipid" [settings]="dropdownSettings"
+                          (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
+                          (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+                      </angular2-multiselect> -->
+                    <!-- <div *ngIf="!dshipForm.controls.dealershipuser.valid && (dshipForm.controls.dealershipuser.dirty||submitted)" class="error">
+                              <div *ngIf="dshipForm.controls.dealershipuser.errors.required && (dshipForm.controls.Role != 100 || dshipForm.controls.Role != 999) ">DealerShip is required</div>
+                          </div> -->
+                    <div
+                      *ngIf="
+                        !dshipForm.controls.dealershipuser.valid &&
+                        (dshipForm.controls.dealershipuser.dirty || submitted)
+                      "
+                      class="error"
+                    >
+                      <div
+                        *ngIf="
+                          (dshipForm.get('Role').value != 100 ||
+                            dshipForm.get('Role').value != 999) &&
+                          dealershipid.length == 0
+                        "
+                      >
+                        DealerShip is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <label for="status"
+                    >Status: &nbsp;
+                    <input
+                      type="radio"
+                      value="Y"
+                      name="status"
+                      [(ngModel)]="du_status"
+                      formControlName="status"
+                    />&nbsp;
+                    <label class="statusActive" for="status">Active</label
+                    >&nbsp;
+                    <input
+                      type="radio"
+                      value="N"
+                      name="status"
+                      [(ngModel)]="du_status"
+                      formControlName="status"
+                    />&nbsp;
+                    <label class="statusInactive" for="status">In-Active</label>
+                  </label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6" style="display: flex; margin: 1% 0 0 5%">
+                  <div
+                    class="form-group"
+                    style="margin-left: -57px; margin-top: 35px"
+                  >
+                    <img
+                      src="assets/Images/Upload-Icon.png"
+                      (click)="selectFile.click()"
+                    />
+                    <input
+                      style="
+                        display: none;
+                        height: 70px;
+                        width: 148px;
+                        margin-top: 18px;
+                      "
+                      type="file"
+                      name="image"
+                      formControlName="fileUpload"
+                      (change)="fileChangeEvent($event)"
+                      #selectFile
+                      accept=".jpg,.jpeg,.png"
+                    />
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <button
+                          *ngIf="proimg"
+                          class="fa fa-times"
+                          aria-hidden="true"
+                          style="float: right"
+                          (click)="removeimg()"
+                        >
+                          <img
+                            width="3px"
+                            height="5px"
+                            src="assets/Images/cancelicon.png"
+                          />
+                        </button>
+                        <div style="width: 150px" *ngIf="selecteimage">
+                          <!-- <image-cropper
+                                      [imageChangedEvent]="imageChangedEvent"
+                                      [maintainAspectRatio]="true"
+                                      [aspectRatio]="4 / 4"
+                                      [resizeToWidth]="128"
+                                      [resizeToHeight]="128"
+                                      format="png"
+                                      (imageCropped)="imageCropped($event)"
+                                      (imageLoaded)="imageLoaded()"
+                                      (cropperReady)="cropperReady()"
+                                      (loadImageFailed)="loadImageFailed()"
+                                      ></image-cropper> -->
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        &nbsp;&nbsp;
+                        <img [src]="proimg" style="width: 150px" />
+                      </div>
+                    </div>
+
+                    <!-- <div class="image-preview" *ngIf="previewUrl">
+                                <img [src]="croppedImage" class="userpro"  (error)="onImgError($event)" />
+                            </div> -->
+                    <img *ngIf="image != ''" [src]="image" height="100" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="row pt-1" *ngIf="chkstatus">
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label class="status">Status</label>
+                            <input type="checkbox" formControlName="status">
+                        </div>
+                    </div>
+                </div> -->
+
+              <!-- <div class="row" style="padding-bottom: 4%;">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-1" style="padding-top: 2%">
+                        <button type="submit" class="button">Save</button>
+                    </div>
+                    <div class="col-sm-1" style="padding-top: 2%">
+                        <a  style="padding-left: 47px;" (click)="Cancel();"><button  class="button">Cancel</button></a>
+
+                    </div>
+                </div> -->
+              <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-2">
+                    <button type="submit" class="savebutton">Save</button>
+                  </div>
+                  <div class="col-lg-2">
+                    <button type="button" class="savebutton" (click)="Cancel()">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

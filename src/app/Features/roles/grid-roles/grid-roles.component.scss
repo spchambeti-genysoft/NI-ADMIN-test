@@ -1,0 +1,147 @@
+
+
+.dashboard{
+  border-collapse: collapse;
+  font-size: 12px;
+  color: #333333;
+  width: 1000px;
+  display: table;
+}
+
+.dashboardHeader{
+   border-collapse: collapse;
+  font-size: 14px;
+  font-family: "Roboto-Regular";
+  width: 1000px;
+  display: table;
+  margin: .8rem 0px;
+  margin-top: 3%;
+  display: none;
+}
+
+
+.dashboard th{
+  background-color: #323840;
+  font-weight: normal;
+  height: 20px;
+  padding: 10px 10px;
+  color: #fff;
+  text-transform: uppercase;
+
+}
+.dashboard tbody tr:nth-child(odd){
+  background: #373636;
+  color: #fff;
+}
+
+.dashboard tbody tr:nth-child(even){
+  background: #4b4a4a;
+  color: #fff;
+}
+.dashboard td{
+  height: auto;
+  padding: 10px 10px;
+  // border: 1px solid #ccc ;
+  font-size: 16px;
+
+}
+
+.contentss {
+  width: 1010px;
+  height:400px;
+  overflow-x: hidden;
+}
+
+.contentss::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: #3f3f3f;
+}
+
+
+.contentss::-webkit-scrollbar-thumb {
+  width: 5px;
+  height: 8px;
+  background-color: #00a453;
+  border-radius: 3px;
+}
+
+.gridheader{
+  width: 1000px;
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: left;
+  background-image: linear-gradient(to right,#313030, #626060);
+  margin-bottom: 3%;
+}
+
+.gridheader th{
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.getuser{
+  padding:0px 2px; margin: 0px 2px; text-align: right; text-decoration-color: white; width: auto; height: 20px; float: left;
+}
+.getuserlabel{
+  margin-bottom: .0rem; font-size: 18px; font-weight: 500; margin-left: 5%;
+}
+
+
+.AddIcon{
+  float: left; margin-left: 15px; cursor: pointer;
+}
+
+.getrolediv{
+  margin: 6px 6px 2px 0px; float: left
+}
+.getrolelbl{
+  margin-bottom: .0rem;font-size: 14px;
+}
+
+
+.AddForm{
+  width: 75%;
+  background: rgba(77,77,77,.6);
+}
+
+
+.AddForm label{
+ margin-bottom: 0px !important;
+ margin-top: 5%;
+}
+
+.AddForm input{
+ width: 40%;
+}
+
+
+label{
+   margin-top: 5% !important;
+}
+
+.form-control{
+   width: 90%;
+}
+
+.button{
+  background-color: #577f63;
+  color: white;
+  width: 100px;
+}
+
+.Active{
+   color: green;
+}
+
+.InActive{
+   color: red;
+}
+
+.DivAZ1{
+  float: left;
+}
+
+.DivAZ2{
+ float: left; margin-left: 10%;
+}

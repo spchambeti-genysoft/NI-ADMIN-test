@@ -1,0 +1,814 @@
+<div *ngIf="gridpnl" class="col-12 p-2">
+  <div class="gridheader">
+    <thead>
+      <tr>
+        <th style="width: 462px; font-weight: bold">
+          <div style="float: left">
+            <div class="getuser">
+              <label class="getuserlabel">Dealer Users</label>
+            </div>
+            <div class="AddIcon">
+              <a (click)="showAddPanel()">
+                <img src="assets/Images/brand_plus.png" />
+              </a>
+            </div>
+          </div>
+        </th>
+        <th style="width: 500px; text-align: center">
+          <div style="float: left"></div>
+        </th>
+        <th style="width: 10%; text-align: center" colspan="2"></th>
+        <th style="width: 10%; text-align: center" colspan="2">
+          <div style="width: 80px; cursor: pointer" (click)="atoZClick()">
+            <div class="DivAZ1">A - Z</div>
+            <div class="DivAZ2">
+              <a>
+                <img src="assets/Images/sorting_img.png" />
+              </a>
+            </div>
+          </div>
+        </th>
+        <th style="padding-left: 0px">
+          <div class="search">
+            <input
+              type="text"
+              formControlName="txtSearch"
+              placeholder="Search"
+              autofocus
+              (keyup)="onSearch()"
+            />
+          </div>
+          <div style="float: right; margin-top: -22px; margin-right: 6px">
+            <img src="assets/Images/Search-Icon.png" />
+          </div>
+        </th>
+      </tr>
+    </thead>
+  </div>
+
+  <div class="row" *ngIf="atozFltr" style="height: 50px; margin-bottom: 10px">
+    <div style="width: 100%">
+      <app-atoz-filter (onAlphaClick)="onAlphaCatch($event)"></app-atoz-filter>
+    </div>
+  </div>
+
+  <div class="mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      *ngIf="
+        dealerUsersArry
+          | alphaFilter : alphaSrch : alphaColumns : 'aa' as DealerData
+      "
+    >
+      <ng-container matColumnDef="DEALER IMAGE">
+        <th mat-header-cell *matHeaderCellDef>DEALER IMAGE</th>
+        <td mat-cell *matCellDef="let element">
+          <img
+            src="{{ imagebinding }}{{ element.Du_Image }}"
+            height="50"
+            width="50"
+            onerror="this.src='../../assets/Images/default.png'"
+            style="padding: 5px"
+          />
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="NAME">
+        <th mat-header-cell *matHeaderCellDef>NAME</th>
+        <td mat-cell *matCellDef="let element">
+          <span>
+            <span class="gridname">
+              {{ element.Du_First_Name }} {{ element.Du_Last_Name }}</span
+            >
+            <span class="RoleName"> {{ element.rolename }}</span>
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="EMAIL">
+        <th mat-header-cell *matHeaderCellDef>EMAIL</th>
+        <td mat-cell *matCellDef="let element">{{ element.Du_Login_Id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="STATUS">
+        <th mat-header-cell *matHeaderCellDef>STATUS</th>
+        <td mat-cell *matCellDef="let element">
+          <span
+            *ngIf="element.Du_Status === 'Y'; else elseBlock"
+            style="width: 100px"
+          >
+            <div class="Active">
+              <span style="text-align: left; margin-right: 70px">Active</span>
+            </div>
+          </span>
+
+          <ng-template #elseBlock>
+            <td style="width: 100px">
+              <div class="InActive">
+                <span style="text-align: left; margin-right: 70px"
+                  >Inactive</span
+                >
+              </div>
+            </td>
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ACTIONS">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon (click)="editBrand(element)">edit</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-template #elseBlock>
+        <td style="width: 100px">
+          <div class="InActive">
+            <span style="text-align: left; margin-right: 70px">Inactive</span>
+          </div>
+        </td>
+      </ng-template>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20, 100]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
+</div>
+
+<div>
+  <div class="dashboard_bg">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- <div class="col-9 pt-3" *ngIf="gridpnl">
+
+                        <div class="content_body">
+                            <form [formGroup]="SearchDealerForm">
+                                <table style="width: 1000px; float: left;">
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td style="vertical-align: top;">
+                                                <table class="gridheader">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 462px; font-weight: bold;">
+                                                                <div style="float: left">
+                                                                    <div class="getuser">
+                                                                        <label class="getuserlabel">Dealer Users</label>
+                                                                    </div>
+                                                                    <div class="AddIcon">
+                                                                        <a (click)="showAddPanel()">
+                                                                            <img src="assets/Images/brand_plus.png">
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </th>
+                                                            <th style="width: 500px; text-align: center">
+                                                                <div style="float: left">
+                                                                </div>
+                                                            </th>
+                                                            <th style="width:10%; text-align: center" colspan="2">
+                                                                <th style="width:10%; text-align: center" colspan="2">
+                                                                    <div style="width: 80px; cursor: pointer" (click)="atoZClick()">
+                                                                        <div class="DivAZ1">A - Z</div>
+                                                                        <div class="DivAZ2">
+                                                                            <a>
+                                                                                <img src="assets/Images/sorting_img.png">
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </th>
+                                                                <th style="padding-left: 0px;">
+                                                                    <div class="search">
+                                                                        <input type="text" formControlName="txtSearch" placeholder="Search" autofocus (keyup)="onSearch()">
+                                                                    </div>
+                                                                    <div style="float: right; margin-top: -22px; margin-right: 6px;">
+                                                                        <img src="assets/Images/Search-Icon.png">
+                                                                    </div>
+                                                                </th>
+
+
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                                <div class="row" *ngIf="atozFltr" style="height: 50px; margin-bottom: 10px">
+                                                    <div style="width: 100%">
+                                                        <app-atoz-filter (onAlphaClick)="onAlphaCatch($event)"></app-atoz-filter>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-end">
+                                                    <div class="login-container" style="margin-right: 25px;">
+                                                        <form [formGroup]="dealerForm" (ngSubmit)="onSubmit()">
+                                                            <div>
+                                                                <div class="form-group  drop_dwn">
+                                                                    <select formControlName="dealergroup"  id="drop" [ngModel]="defaultgealergroup" (change)="getgriddealergroupid($event)">
+                                                                        <option [value]="0">All</option>
+                                                                        <option *ngFor="let d of dealerNames" [value]="d.dg_id">{{d.dg_name}}</option>
+
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="form-group  drop_dwn">
+
+                                                                    <select formControlName="dealer" id="drop" [ngModel]="defaultdealer" (change)="getid($event)">
+
+                                                                        <option [value]="0">All</option>
+                                                <option *ngFor="let d of dealerShips" [value]="d.dealer_id">{{d.dealer_name}}</option>
+
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div>
+                                                                <input type="button" value="Search" class="btnsearch" (click)="display()">
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <table class="dashboard">
+                                                        <thead>
+                                                            <tr class="colHeader" style="width: 100%;">
+                                                                <th style="width: 1%"></th>
+                                                                <th align="center" scope="col" style="width: 15%; text-align: left">
+                                                                    Dealer Image
+                                                                </th>
+                                                                <th align="center" scope="col" style="width: 12%; text-align: center">
+                                                                    Name
+                                                                </th>
+                                                                <th align="center" scope="col" style="width: 45%; text-align: center">
+                                                                    Email
+                                                                </th>
+                                                                <th align="center" scope="col" style="width: 20%; text-align: center">
+                                                                    Status
+                                                                </th>
+
+                                                                <th scope="col" style="width: 37px">&nbsp;</th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                    <div class="col-md-8" style="padding-left: 0px">
+                                                        <div class="contentss">
+                                                            <table class="dashboard">
+                                                                <tbody>
+
+                                                                    <ng-container *ngIf="dealerUsersArry | alphaFilter : alphaSrch: alphaColumns :'aa' as DealerData; else noItems">
+
+                                                                        <tr *ngFor="let item of DealerData">
+
+                                                                            <td style="width: 120px;">
+                                                                                <div style="text-align: center;">
+                                                                                    <img src="{{imagebinding}}{{item.Du_Image}}" height="100" width="100" onerror="this.src='../../assets/Images/default.png'">
+
+
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="margin-left: 30px;">
+                                                                                    <span>
+                                                                                        <div class="gridname"> {{item.Du_First_Name}} {{item.Du_Last_Name}}</div>
+                                                                                        <br>
+
+                                                                                        <div class="RoleName"> {{item.rolename}}</div>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div style="text-align: left;">
+                                                                                    <span style="font-size: 15px;margin-right: 100px;">{{item.Du_Login_Id}}</span>
+
+
+                                                                                </div>
+                                                                            </td>
+                                                                            <td *ngIf="item.Du_Status === 'Y'; else elseBlock" style="width: 100px">
+                                                                                <div class="Active">
+                                                                                    <span style="text-align: left;margin-right: 70px;">Active</span>
+                                                                                </div>
+                                                                            </td>
+
+                                                                            <ng-template #elseBlock>
+                                                                                <td style="width: 100px">
+                                                                                    <div class="InActive">
+                                                                                        <span style="text-align: left;margin-right: 70px;">Inactive</span>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </ng-template>
+
+                                                                            <td>
+                                                                                <a (click)="editBrand(item)" style="cursor: pointer;">
+                                                                                    <img src="assets/Images/edt_icon.png">
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <ng-container *ngIf="!DealerData.length && hide" [ngTemplateOutlet]="noItems"></ng-container>
+                                                                    </ng-container>
+                                                                    <ng-template #noItems>
+                                                                        <tr>
+                                                                            <td colspan="9" style="text-align: center;">No Dealers Available!</td>
+                                                                        </tr>
+                                                                    </ng-template>
+                                                                </tbody>
+
+                                                            </table>
+                                                            <div class="result">{{result}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div> -->
+        <div class="col-9 pt-3 ml-3 mt-3 contentpanel_bg" *ngIf="Addeditpnl">
+          <h1>Create Dealer User</h1>
+          <div class="ml-4">
+            <form [formGroup]="dshipForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup">
+                    <label>First Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="FirstName"
+                      autofocus
+                    />
+                    <div
+                      *ngIf="
+                        !dshipForm.controls.FirstName.valid &&
+                        (dshipForm.controls.FirstName.dirty || submitted)
+                      "
+                      class="error"
+                    >
+                      <div *ngIf="dshipForm.controls.FirstName.errors.required">
+                        First Name is required
+                      </div>
+                      <div *ngIf="dshipForm.controls.FirstName.errors.pattern">
+                        First Name is invalid
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup">
+                    <label>Last Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="LastName"
+                    />
+                  </div>
+                  <div
+                    *ngIf="
+                      !dshipForm.controls.LastName.valid &&
+                      (dshipForm.controls.LastName.dirty || submitted)
+                    "
+                    class="error"
+                  >
+                    <div *ngIf="dshipForm.controls.LastName.errors.required">
+                      Last Name is required
+                    </div>
+                    <div *ngIf="dshipForm.controls.LastName.errors.pattern">
+                      Last Name is invalid
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Gender</label>
+                    <select class="form-control" formControlName="Gender">
+                      <option value="">Select Gender</option>
+                      <option value="M">Male</option>
+                      <option value="F">Female</option>
+                    </select>
+                    <!-- <div *ngIf="!dshipForm.controls.Gender.valid && (dshipForm.controls.Gender.dirty||submitted)" class="error">
+                                                <div *ngIf="dshipForm.controls.Gender.errors.required">Gender is required</div>
+                                            </div> -->
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Job Title</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="JobTitle"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Email Id</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="loginId"
+                    />
+                    <div
+                      *ngIf="
+                        !dshipForm.controls.loginId.valid &&
+                        (dshipForm.controls.loginId.dirty || submitted)
+                      "
+                      class="error"
+                    >
+                      <div *ngIf="dshipForm.controls.loginId.errors.required">
+                        Email Id is required
+                      </div>
+                      <div *ngIf="dshipForm.controls.loginId.errors.pattern">
+                        Must be a valid EmailId
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="Password"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Date of Joining</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="DateofJoining"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Date of birth</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="Dob"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Address1</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="Address1"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Address2</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="Address2"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>City</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="City"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>State</label>
+                    <select class="form-control" formControlName="State">
+                      <option value="">Select State</option>
+                      <!-- <option *ngFor="let i of getstates" [value]="i.sg_id">
+                        {{ i.sg_name }}
+                      </option> -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Zip Code</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="Zip"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Phone</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="50"
+                      formControlName="Phone"
+                      pattern="[0-9+( )-]{14}$"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>User Type</label>
+                    <div class="formgroup grp grp_det"></div>
+                    <input
+                      type="radio"
+                      name="usertype"
+                      formControlName="usertype"
+                      value="G"
+                      (change)="onChangeRadioBtn($event)"
+                    />&nbsp; <label>DealerGroup</label>&nbsp;
+                    <input
+                      type="radio"
+                      name="usertype"
+                      formControlName="usertype"
+                      value="D"
+                      (change)="onChangeRadioBtn($event)"
+                    />&nbsp;
+                    <label>DealerShip</label>
+
+                    <div
+                      *ngIf="
+                        !dshipForm.controls.usertype.valid &&
+                        (dshipForm.controls.usertype.dirty || submitted)
+                      "
+                      class="error"
+                    >
+                      <div *ngIf="dshipForm.controls.usertype.errors.required">
+                        User type is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Role</label>
+
+                    <select
+                      class="form-control"
+                      formControlName="Role"
+                      (change)="getdealershipDropdownDisable($event)"
+                    >
+                      <option value="">Select Role</option>
+                      <option
+                        *ngFor="let r of rolesArray"
+                        [value]="r.Role_UniqId"
+                      >
+                        {{ r.Role_Name }}
+                      </option>
+                    </select>
+
+                    <div
+                      *ngIf="
+                        !dshipForm.controls.Role.valid &&
+                        (dshipForm.controls.Role.dirty || submitted)
+                      "
+                      class="error"
+                    >
+                      <div *ngIf="dshipForm.controls.Role.errors.required">
+                        Role is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-1">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                  <div class="formgroup grp grp_det">
+                    <label>Dealer Group</label>
+
+                    <select
+                      class="form-control"
+                      formControlName="dealeruser"
+                      (change)="getdealergroup($event)"
+                    >
+                      <option value="">Select Dealer Group</option>
+                      <option *ngFor="let d of dealerNames" [value]="d.dg_id">
+                        {{ d.dg_name }}
+                      </option>
+                    </select>
+                    <div
+                      *ngIf="
+                        !dshipForm.controls.dealeruser.valid &&
+                        (dshipForm.controls.dealeruser.dirty || submitted)
+                      "
+                      class="error"
+                    >
+                      <div
+                        *ngIf="dshipForm.controls.dealeruser.errors.required"
+                      >
+                        DealerGroup is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4"
+                  *ngIf="showDealerShipDropDown"
+                >
+                  <div class="formgroup grp grp_det">
+                    <label>Dealership</label>
+                    <p-multiSelect
+                      [(ngModel)]="dealershipid"
+                      [options]="dealershipsList"
+                      optionLabel="name"
+                    ></p-multiSelect>
+                    <!-- <angular2-multiselect formControlName="dealershipuser"
+                                            style="cursor: pointer; text-align: left; color:black" [data]="dealershipsList"
+                                            [(ngModel)]="dealershipid" [settings]="dropdownSettings"
+                                            (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
+                                            (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)" required>
+                                        </angular2-multiselect> -->
+                    <div
+                      *ngIf="
+                        !dshipForm.controls.dealershipuser.valid &&
+                        (dshipForm.controls.dealershipuser.dirty || submitted)
+                      "
+                      class="error"
+                    >
+                      <div
+                        *ngIf="
+                          dshipForm.controls.dealershipuser.errors.required
+                        "
+                      >
+                        DealerShip is required
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="
+                        dshipForm.controls.dealershipuser.valid &&
+                        (dshipForm.controls.dealershipuser.dirty || submitted)
+                      "
+                      class="error"
+                    >
+                      <div
+                        *ngIf="
+                          (dshipForm.get('Role').value != 100 ||
+                            dshipForm.get('Role').value != 999) &&
+                          dealershipid.length == 0
+                        "
+                      >
+                        DealerShip is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6" style="display: flex; margin: 1% 0 0 5%">
+                  <div
+                    class="form-group"
+                    style="margin-left: -57px; margin-top: 35px"
+                  >
+                    <img
+                      src="assets/Images/prof_img_dwn.png"
+                      style="cursor: pointer"
+                      (click)="selectFile.click()"
+                    />
+
+                    <input
+                      style="
+                        display: none;
+                        height: 70px;
+                        width: 148px;
+                        margin-top: 18px;
+                      "
+                      type="file"
+                      name="image"
+                      formControlName="fileUpload"
+                      (change)="fileChangeEvent($event)"
+                      #selectFile
+                    />
+                    <div class="row">
+                      <div class="col-md-6">
+                        <button
+                          *ngIf="proimg"
+                          class="fa fa-times"
+                          aria-hidden="true"
+                          style="float: right"
+                          (click)="removeimg()"
+                        >
+                          <img
+                            width="3px"
+                            height="5px"
+                            src="assets/Images/cancelicon.png"
+                          />
+                        </button>
+                        <div style="width: 150px" *ngIf="selecteimage">
+                          <image-cropper
+                            [imageChangedEvent]="imageChangedEvent"
+                            [maintainAspectRatio]="true"
+                            [aspectRatio]="4 / 4"
+                            [resizeToWidth]="128"
+                            [resizeToHeight]="128"
+                            format="png"
+                            (imageCropped)="imageCropped($event)"
+                            (cropperReady)="cropperReady()"
+                            (loadImageFailed)="loadImageFailed()"
+                          ></image-cropper>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        &nbsp;
+                        <img
+                          [src]="proimg"
+                          style="width: 150px; margin-top: 6%"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- <div class="image-preview" *ngIf="previewUrl">
+                                <img [src]="previewUrl" class="userpro" (error)="onImgError($event)" />
+                            </div> -->
+                    <!-- <img [src]="croppedImage" style="width:150px"/> -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="row pt-1" *ngIf="chkstatus">
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                  <div class="form-group">
+                    <label class="status">Status</label>
+                    <input type="checkbox" formControlName="status" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" style="padding-bottom: 4%">
+                <div class="col-sm-1"></div>
+
+                <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-2">
+                      <button type="submit" class="savebutton">Save</button>
+                    </div>
+                    <div class="col-lg-2">
+                      <button
+                        type="button"
+                        class="savebutton"
+                        (click)="Cancel()"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

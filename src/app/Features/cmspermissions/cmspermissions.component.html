@@ -1,0 +1,256 @@
+<div class="dashboard_bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <!-- <div class="row "> -->
+        <div class="row incent_head">
+          <div class="col-12 col-lg-6 d-flex align-items-center pl-lg-5">
+            <h4>CMS Permissions</h4>
+          </div>
+        </div>
+
+        <div class="row justify-content-center py-4 pl-lg-3 pr-lg-4">
+          <div class="col-12 col-lg-12">
+            <div class="incent_bg">
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="col-12">
+                            <div class="form-group">
+                              <div class="col-sm-12">
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <div class="form-group incent">
+                                      <select
+                                        (change)="onOptionsSelectedType($event)"
+                                        [(ngModel)]="TypeId"
+                                      >
+                                        <option value="0">SELECT TYPE</option>
+                                        <option
+                                          value="A"
+                                          *ngIf="
+                                            this.currentUserRoleId == '999'
+                                          "
+                                        >
+                                          ADMIN
+                                        </option>
+                                        <option value="F">DEALER</option>
+                                      </select>
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    class="col-md-4"
+                                    *ngIf="this.currentUserRoleId == '999'"
+                                  >
+                                    <div class="form-group incent">
+                                      <select
+                                        [(ngModel)]="dealergroup"
+                                        (change)="getgriddealergroupid($event)"
+                                      >
+                                        <option value="0">
+                                          SELECT DEALER GROUP
+                                        </option>
+                                        <option
+                                          *ngFor="let d of dealerNames"
+                                          [value]="d.dg_id"
+                                        >
+                                          {{ d.dg_name }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-md-4">
+                                    <div class="form-group incent">
+                                      <select
+                                        (change)="onOptionsSelected($event)"
+                                        [(ngModel)]="roleId"
+                                      >
+                                        <option value="0">SELECT ROLE</option>
+                                        <option
+                                          [value]="item.Role_UniqId"
+                                          *ngFor="let item of Roles"
+                                        >
+                                          {{ item.Role_Name }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- <div class="row">
+														<div class="col-12">
+															<div class="ml-3">
+																<div class="form-group row incent">
+                                                               <label class="col-lg-2 align-self-center">Select Login Type:</label>
+                                                               <div class="col-lg-10">
+																<select	(change)='onOptionsSelectedType($event)' [(ngModel)]="TypeId">
+																<option value='0'>-- SELECT TYPE --</option>
+																<option value='A' *ngIf="this.currentUserRoleId == '999'">ADMIN</option>
+																<option value='F'>DEALER</option>
+															    </select>
+                                                                </div>
+                                                               </div>
+																<div class="form-group row incent">
+																	<label class="col-lg-2 align-self-center">Select a Role:</label>
+																	<div class="col-lg-10">
+																		<select (change)='onOptionsSelected($event)' [(ngModel)]="roleId">
+																		<option value='0'>-- SELECT ROLE --</option>
+																		<option [value]="item.Role_UniqId" *ngFor="let item of Roles">
+																			{{item.Role_Name}}
+																		</option>
+																	</select>
+																	</div>
+																	</div>
+															</div>
+														</div>
+													</div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="width: 100%">
+                      <div
+                        *ngIf="showdata"
+                        style="
+                          text-align: center;
+                          position: relative;
+                          top: 100px;
+                          font-size: 19px;
+                        "
+                      >
+                        <p>
+                          Please select type and role to get modules data..!
+                        </p>
+                      </div>
+                      <div id="pnlModules">
+                        <fieldset style="width: 100%; padding: 25px">
+                          <!-- <app-loader-animation *ngIf="isLoading"></app-loader-animation> -->
+                          <div class="table-responsive">
+                            <table
+                              id="modules"
+                              style="color: black"
+                              class="table w-100 history_table"
+                            >
+                              <tbody>
+                                <tr *ngFor="let item of cmsModules">
+                                  <td
+                                    *ngIf="item.smod_mod_id == 0"
+                                    style="
+                                      border-top: 1px solid #3e3d3d !important;
+                                    "
+                                  >
+                                    <div>
+                                      <input
+                                        type="checkbox"
+                                        id="{{ item.mod_id }}"
+                                        class="parent"
+                                        (change)="checkParent(item, $event)"
+                                        [checked]="item.CHECK_BOX == 'Y'"
+                                      /><label for="{{ item.mod_id }}"></label
+                                      ><label
+                                        for="{{ item.mod_id }}"
+                                        style="
+                                          padding-bottom: 4px;
+                                          padding-top: 3px;
+                                          font-weight: 600;
+                                          font-family: 'Roboto-Bold';
+                                          color: #fff;
+                                        "
+                                        >{{ item.mod_name }}</label
+                                      >
+                                    </div>
+                                    <div *ngFor="let subItem of cmsModules">
+                                      <div
+                                        *ngIf="
+                                          subItem.smod_mod_id == item.mod_id
+                                        "
+                                      >
+                                        <div
+                                          style="
+                                            margin-left: 23px;
+                                            width: 375px;
+                                          "
+                                        >
+                                          <input
+                                            type="checkbox"
+                                            (change)="
+                                              checkChild(subItem, item, $event)
+                                            "
+                                            [checked]="subItem.CHECK_BOX == 'Y'"
+                                            id="{{ subItem.smod_id }}"
+                                            class="child{{ subItem.smod_id }}"
+                                          /><label
+                                            for="{{ subItem.smod_id }}"
+                                          ></label
+                                          ><label
+                                            for="{{ subItem.smod_id }}"
+                                            style="
+                                              padding-bottom: 4px;
+                                              padding-top: 3px;
+                                              color: #fff;
+                                            "
+                                            >{{ subItem.smod_filename }}</label
+                                          >
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+
+                          <div
+                            class="col-lg-12 pt-lg-5 pl-lg-4"
+                            *ngIf="ShowButtons"
+                          >
+                            <div class="row">
+                              <div class="col-lg-2">
+                                <button
+                                  type="submit"
+                                  class="savebutton"
+                                  (click)="saveModulePermissons()"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                              <div class="col-lg-2">
+                                <button
+                                  type="submit"
+                                  class="savebutton"
+                                  (click)="cancelBack()"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+  <!--
+	<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+		<p style="color: white">Please Wait... </p>
+	</ngx-spinner> -->
+</div>

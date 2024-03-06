@@ -1,0 +1,66 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.ChKNodes{
+	  display:block;
+  max-height:400px;
+  overflow-y:auto;
+
+}
+
+
+/* try removing the "hack" below to see how the table overflows the .body */
+.hack1 {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.hack2 {
+  display: table-cell;
+  overflow-x: auto;
+  width: 100%;
+}
+
+input[type=checkbox]:not(old) + label, input[type=radio ]:not(old) + label {
+    /* display: inline-block; */
+    margin-left: -14px;
+    padding-left: 28px;
+    /* background: url(../images/check.png) no-repeat 0 0; */
+    line-height: 24px;
+}
+
+.incent_head{padding: 1rem 2rem; font-size: 16px; background-image: linear-gradient(to right, #313130, #6d6b6b);
+}
+.incent_head h4{font-size: 22px;font-family: 'Roboto-Bold'!important; letter-spacing:2px;margin: 0 .5rem 0 0; ;}
+
+.incent_bg{width: 100%; min-height: 500px; background: rgba(77,77,77,.6); font-size: 14px;
+  border: 1px solid #4d4d4d; border-radius: 5px; padding: 25px 50px; margin-bottom: 30px;
+}
+
+.table-responsive{height: 350px;}
+
+.table-responsive::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: #3f3f3f;
+}
+
+
+.table-responsive::-webkit-scrollbar-thumb {
+  width: 5px;
+  height: 8px;
+  background-color: #00a453;
+  border-radius: 3px;
+}
+
+
+
+.incent{margin-bottom: 30px;}
+
+.incent select{width: 100%;​​​​​​​​width: 200px;height: 35px; outline: none; border: none!important; padding: 010px!important; color: #ccc; font-size: 12px; border-radius: 3px;background: url(../../../assets/Images/Arrow_select.png) 98%no-repeat#454444; appearance: none;}
+
+
+
+

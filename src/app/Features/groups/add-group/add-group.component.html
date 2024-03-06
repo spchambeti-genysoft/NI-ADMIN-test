@@ -1,0 +1,662 @@
+<div>
+  <div class="dashboard_bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-9 pt-3">
+          <div
+            style="
+              width: 100%;
+              float: left;
+              margin-bottom: 3px;
+              cursor: pointer;
+            "
+          >
+            <a
+              href="/admin/dashboard"
+              style="
+                text-decoration: underline;
+                color: #00a453;
+                float: right;
+                font-size: 14px;
+              "
+              >Dashboard</a
+            >
+          </div>
+          <div class="row">
+            <div class="col-12 pr-0">
+              <!-- <app-dealership-header></app-dealership-header> -->
+              <div class="contentpanel_bg">
+                <form [formGroup]="dshipForm" (ngSubmit)="onSubmit()">
+                  <div *ngIf="id > 0">
+                    <!-- <a [routerLink]="['/admin/DealershipList',id]"
+                                          style="text-decoration: underline;color: green;float: right;">Back</a> -->
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="col-lg-9 form-group grp pr-lg-0">
+                        <label>Dealership Group</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          maxlength="1001"
+                          formControlName="dship"
+                          autofocus
+                        />
+                        <small
+                          class="errormessage"
+                          *ngIf="
+                            submitted &&
+                            dshipForm.controls.dship.hasError('required')
+                          "
+                          >Dealership Group is required
+                          <br />
+                        </small>
+                        <small
+                          class="errormessage"
+                          *ngIf="dshipForm.controls.dship.hasError('pattern')"
+                        >
+                          Only alphabets are allowed for Dealership Group
+                          <br />
+                        </small>
+                        <small
+                          class="errormessage"
+                          *ngIf="dshipForm.controls.dship.hasError('maxlength')"
+                        >
+                          You have reached your maximum limit of characters
+                          allowed for Dealership Group
+                        </small>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-1 pr-0 pointer text-right">
+                          <label>&nbsp;</label>
+                          <div>
+                            <img
+                              alt="image not found"
+                              src="assets/Images/circle_icon.png"
+                              (click)="AddInput()"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-lg-10 pl-2">
+                          <div class="col-lg-10 form-group grp grp_det pl-lg-0">
+                            <label>Address1</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="address"
+                              maxlength="1001"
+                              autofocus
+                            />
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                submitted &&
+                                dshipForm.controls.address.hasError('required')
+                              "
+                              >Address is required
+                              <br />
+                            </small>
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                dshipForm.controls.address.hasError('maxlength')
+                              "
+                            >
+                              You have reached your maximum limit of characters
+                              allowed for Address
+                            </small>
+                          </div>
+                          <div formArrayName="quantities">
+                            <div class="col-lg-11 pl-0">
+                              <div
+                                class="row"
+                                *ngFor="
+                                  let quantity of quantities().controls;
+                                  let i = index
+                                "
+                                [formGroupName]="i"
+                              >
+                                <div class="col-lg-11 form-group grp grp_det">
+                                  <label style="color: #a6a6a6"
+                                    >Address {{ i + 2 }}</label
+                                  >
+                                  <input
+                                    type="text"
+                                    formControlName="address1"
+                                    class="form-control"
+                                  />
+                                </div>
+                                <div class="col-lg-1 px-0 align-self-center">
+                                  <img
+                                    alt="image not found"
+                                    (click)="remove(i)"
+                                    style="max-width: 35%"
+                                    src="assets/Images/remove-icon.png"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-10 form-group grp grp_det pl-lg-0">
+                            <label>City</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              maxlength="51"
+                              formControlName="dcity"
+                              autofocus
+                            />
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                submitted &&
+                                dshipForm.controls.dcity.hasError('required')
+                              "
+                              >City is required
+                              <br />
+                            </small>
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                dshipForm.controls.dcity.hasError('maxlength')
+                              "
+                            >
+                              You have reached your maximum limit of characters
+                              allowed for City
+                            </small>
+                          </div>
+                          <div class="col-lg-10 pl-lg-0">
+                            <div class="row">
+                              <div class="col-lg-7 pr-0">
+                                <div class="form-group grp grp_det">
+                                  <label>State</label>
+                                  <div class="dash">
+                                    <select
+                                      class="form-control"
+                                      formControlName="state"
+                                    >
+                                      <option value="">Select State</option>
+                                      <option
+                                        *ngFor="let i of getstatesresp"
+                                        [value]="i.sg_id"
+                                      >
+                                        {{ i.sg_name }}
+                                      </option>
+                                    </select>
+                                    <small
+                                      class="errormessage"
+                                      *ngIf="
+                                        submitted &&
+                                        dshipForm.controls.state.hasError(
+                                          'required'
+                                        )
+                                      "
+                                    >
+                                      State is required
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-lg-5">
+                                <div class="form-group grp grp_det">
+                                  <label>Zip</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    (keypress)="_keyPress($event)"
+                                    maxlength="11"
+                                    minlength="5"
+                                    formControlName="zip"
+                                  />
+                                  <small
+                                    class="errormessage"
+                                    *ngIf="
+                                      submitted &&
+                                      dshipForm.controls.zip.hasError(
+                                        'required'
+                                      )
+                                    "
+                                  >
+                                    Zip is required
+                                    <br />
+                                  </small>
+                                  <small
+                                    class="errormessage"
+                                    *ngIf="
+                                      dshipForm.controls.zip.hasError(
+                                        'maxlength'
+                                      )
+                                    "
+                                  >
+                                    You have reached your maximum limit of zip
+                                  </small>
+                                  <small
+                                    class="errormessage"
+                                    *ngIf="
+                                      (submitted &&
+                                        dshipForm.controls.zip.hasError(
+                                          'minlength'
+                                        )) ||
+                                      dshipForm.controls.zip.hasError(
+                                        'minlength'
+                                      )
+                                    "
+                                  >
+                                    Pls enter minimum limit of zip
+                                  </small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-10 pl-lg-0">
+                            <div class="row">
+                              <div class="col-lg-5 pr-0">
+                                <div class="form-group grp grp_det">
+                                  <label>Country</label>
+                                  <div class="dash">
+                                    <select
+                                      class="form-control"
+                                      formControlName="country"
+                                    >
+                                      <option value="">Select Country</option>
+                                      <option value="185">USA</option>
+                                    </select>
+                                    <small
+                                      class="errormessage"
+                                      *ngIf="
+                                        submitted &&
+                                        dshipForm.controls.country.hasError(
+                                          'required'
+                                        )
+                                      "
+                                    >
+                                      Country is required
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-lg-7">
+                                <div class="form-group grp grp_det">
+                                  <label>Phone</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="phone"
+                                    pattern="[0-9+( )-]{14}$"
+                                  />
+                                  <small
+                                    class="errormessage"
+                                    *ngIf="
+                                      submitted &&
+                                      dshipForm.controls.phone.hasError(
+                                        'required'
+                                      )
+                                    "
+                                  >
+                                    Phone is required
+                                    <!-- (keypress)="allowNumbers($event)"                                                                                                               -->
+                                    <br />
+                                  </small>
+                                  <small
+                                    class="errormessage"
+                                    *ngIf="
+                                      dshipForm.controls.phone.hasError(
+                                        'pattern'
+                                      )
+                                    "
+                                  >
+                                    Pls enter minimum length
+                                  </small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-10 form-group grp grp_det pl-lg-0">
+                            <label>Website Address</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              maxlength="101"
+                              formControlName="webaddress"
+                              autofocus
+                            />
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                submitted &&
+                                dshipForm.controls.webaddress.hasError(
+                                  'required'
+                                )
+                              "
+                              >Website Address is required
+                              <br />
+                            </small>
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                dshipForm.controls.webaddress.hasError(
+                                  'maxlength'
+                                )
+                              "
+                            >
+                              You have reached your maximum limit of characters
+                              allowed for Website Address
+                            </small>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-4 pointer">
+                              <img
+                                alt="image not found"
+                                src="assets/Images/Add-Contact.png"
+                                (click)="contactformShow = !contactformShow"
+                              />
+                            </div>
+                            <div class="col-lg-4 pointer">
+                              <img
+                                alt="image not found"
+                                src="assets/Images/Add-User.png"
+                                (click)="contactformShow = !contactformShow"
+                              />
+                            </div>
+                          </div>
+                          <div class="row pt-lg-4">
+                            <div class="col-lg-4 align-self-center pointer">
+                              <img
+                                alt="image not found"
+                                src="assets/Images/Upload-Icon.png"
+                                (click)="selectFile.click()"
+                              />
+                              <input
+                                style="display: none"
+                                type="file"
+                                name="image"
+                                formControlName="fileUpload"
+                                (change)="fileProgress($event)"
+                                #selectFile
+                                accept=".jpg,.jpeg,.png"
+                              />
+                              <div>
+                                <small
+                                  class="errormessage"
+                                  *ngIf="
+                                    submitted &&
+                                    dshipForm.controls.fileUpload.hasError(
+                                      'required'
+                                    )
+                                  "
+                                >
+                                  Upload logo
+                                </small>
+                              </div>
+                            </div>
+                            <div *ngIf="fileUploadProgress">
+                              Upload progress: {{ fileUploadProgress }}
+                            </div>
+                            <div class="image-preview" *ngIf="previewUrl">
+                              <img
+                                [src]="previewUrl"
+                                height="70"
+                                width="100"
+                                alt="image not found"
+                              />
+                            </div>
+
+                            <div *ngIf="uploadedFilePath">
+                              {{ uploadedFilePath }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 pt-lg-5 pl-lg-4">
+                      <div class="row">
+                        <div class="col-lg-2">
+                          <button type="submit" class="savebutton">Save</button>
+                        </div>
+                        <div class="col-lg-2">
+                          <button
+                            type="submit"
+                            class="savebutton"
+                            (click)="cancelBack()"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- -----------------------------------------Add Contacts and Users----------------------------- -->
+          <div class="row" *ngIf="contactformShow == true">
+            <div class="col pr-0" *ngIf="contactformShow">
+              <div class="contentpanel_bg">
+                <form [formGroup]="popupForm">
+                  <div class="col-lg-12"></div>
+
+                  <div class="col-lg-12" formArrayName="dgContacts">
+                    <div
+                      class="row"
+                      *ngFor="
+                        let quantity of dgContacts().controls;
+                        let i = index
+                      "
+                      [formGroupName]="i"
+                    >
+                      <div
+                        class="row"
+                        *ngIf="
+                          popupForm.get('dgContacts')?.value[i].contaction !=
+                          'D'
+                        "
+                      >
+                        <div class="col-lg-3 pr-lg-0">
+                          <div class="form-group grp grp_det">
+                            <label>Contact</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="contact2"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-lg-2">
+                          <div class="form-group grp grp_det">
+                            <label>Position</label>
+                            <div class="dash">
+                              <select
+                                class="form-control"
+                                formControlName="contposition2"
+                              >
+                                <option value="">Select Position</option>
+                                <option value="1">COO</option>
+                                <option value="2">CRO</option>
+                                <option value="3">CFO</option>
+                                <option value="4">Controller</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 pl-lg-0">
+                          <div class="form-group grp grp_det">
+                            <label>Email</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="contemail2"
+                              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$"
+                            />
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                quantity.get('contemail2')?.hasError('pattern')
+                              "
+                            >
+                              Invalid Email Address
+                            </small>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 pl-lg-0">
+                          <div class="form-group grp grp_det">
+                            <label>Phone</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="contphone2"
+                              pattern="[0-9+( )-]{14}$"
+                            />
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                quantity.get('contphone2')?.hasError('pattern')
+                              "
+                            >
+                              Pls enter minimum length
+                            </small>
+                          </div>
+                        </div>
+                        <div class="col-lg-1 px-0 align-self-center">
+                          <input type="hidden" formControlName="contdgd_id" />
+                          <input type="hidden" formControlName="contaction" />
+                          <img
+                            alt="image not found"
+                            src="assets/Images/remove-icon.png"
+                            class="pointer"
+                            style="max-width: 15%"
+                            (click)="contRemove(i)"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 pointer">
+                    <img
+                      alt="image not found"
+                      src="assets/Images/Add-Contact.png"
+                      (click)="addContact()"
+                    />
+                  </div>
+                  <div class="col-lg-12 mt-4"></div>
+                  <div class="col-lg-12" formArrayName="dgUsers">
+                    <div
+                      class="row"
+                      *ngFor="let quantity of dgUsers().controls; let i = index"
+                      [formGroupName]="i"
+                    >
+                      <div
+                        class="row"
+                        *ngIf="
+                          popupForm.get('dgUsers')?.value[i].action1 != 'D'
+                        "
+                      >
+                        <div class="col-lg-3 pr-lg-0">
+                          <div class="form-group grp grp_det">
+                            <label>User</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="user1"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-lg-2">
+                          <div class="form-group grp grp_det">
+                            <label>Position</label>
+                            <div class="dash">
+                              <select
+                                class="form-control"
+                                formControlName="position1"
+                              >
+                                <option value="">Select Position</option>
+                                <option value="1">COO</option>
+                                <option value="2">CRO</option>
+                                <option value="3">CFO</option>
+                                <option value="4">Controller</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 pl-lg-0">
+                          <div class="form-group grp grp_det">
+                            <label>Email</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="email1"
+                              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$"
+                            />
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                quantity.get('email1')?.hasError('pattern')
+                              "
+                            >
+                              Invalid Email Address
+                            </small>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 pl-lg-0">
+                          <div class="form-group grp grp_det">
+                            <label>Phone</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="phone1"
+                              pattern="[0-9+( )-]{14}$"
+                            />
+                            <small
+                              class="errormessage"
+                              *ngIf="
+                                quantity.get('phone1')?.hasError('pattern')
+                              "
+                            >
+                              Pls enter minimum length
+                            </small>
+                          </div>
+                        </div>
+                        <div class="col-lg-1 px-0 align-self-center">
+                          <input type="hidden" formControlName="dgd_id1" />
+                          <input type="hidden" formControlName="action1" />
+                          <img
+                            alt="image not found"
+                            src="assets/Images/remove-icon.png"
+                            class="pointer"
+                            style="max-width: 15%"
+                            (click)="userRemove(i)"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 pointer">
+                    <img
+                      src="assets/Images/Add-User.png"
+                      (click)="addUser()"
+                      alt="image not found"
+                    />
+                  </div>
+                  <div class="col-lg-2 pt-lg-5">
+                    <!-- <img src="assets/Images/SAVE.png" (click)="saveContact()"> -->
+                    <button
+                      type="submit"
+                      class="savebutton"
+                      (click)="saveContact()"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

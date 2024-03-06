@@ -1,0 +1,233 @@
+<div class="dashboard_bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="content_body">
+        <form [formGroup]="SearchRolesForm">
+          <table style="width: 1000px; float: left">
+            <tbody>
+              <tr>
+                <td></td>
+                <td style="vertical-align: top">
+                  <table class="gridheader">
+                    <thead>
+                      <tr>
+                        <th style="width: 462px; font-weight: bold">
+                          <div style="float: left">
+                            <div class="getuser">
+                              <label class="getuserlabel">Roles</label>
+                            </div>
+                            <div class="AddIcon">
+                              <a
+                                [routerLink]="['/admin/rolesAdd']"
+                                routerLinkActive="router-link-active"
+                                style="cursor: pointer"
+                                ><img src="assets/Images/brand_plus.png"
+                              /></a>
+                            </div>
+                          </div>
+                        </th>
+                        <th style="width: 500px; text-align: center">
+                          <div style="float: left"></div>
+                        </th>
+                        <th style="width: 10%; text-align: center" colspan="2">
+                          <div
+                            style="width: 80px; cursor: pointer"
+                            (click)="atoZClick()"
+                          >
+                            <div class="DivAZ1">A - Z</div>
+                            <div class="DivAZ2">
+                              <a><img src="assets/Images/sorting_img.png" /></a>
+                            </div>
+                          </div>
+                        </th>
+                        <th style="padding-left: 0px">
+                          <div class="search">
+                            <input
+                              type="text"
+                              formControlName="txtSearch"
+                              placeholder="Search"
+                              autofocus
+                              (keyup)="onSearch()"
+                            />
+                          </div>
+                          <div
+                            style="
+                              float: right;
+                              margin-top: -22px;
+                              margin-right: 6px;
+                            "
+                          >
+                            <img src="assets/Images/Search-Icon.png" />
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                  </table>
+
+                  <div
+                    class="row"
+                    *ngIf="atozFltr"
+                    style="height: 50px; margin-bottom: 10px"
+                  >
+                    <div style="width: 100%">
+                      <app-atoz-filter
+                        (onAlphaClick)="onAlphaCatch($event)"
+                      ></app-atoz-filter>
+                    </div>
+                  </div>
+
+                  <div>
+                    <table style="display: none" class="dashboard">
+                      <thead>
+                        <tr class="colHeader">
+                          <th style="width: 6%"></th>
+
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 70px; text-align: center"
+                          >
+                            Name
+                          </th>
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 100px; text-align: center"
+                          >
+                            Admin
+                          </th>
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 100px; text-align: center"
+                          >
+                            Frontend
+                          </th>
+                          <th
+                            align="center"
+                            scope="col"
+                            style="width: 100px; text-align: center"
+                          >
+                            Status
+                          </th>
+
+                          <th scope="col" style="width: 37px">&nbsp;</th>
+                        </tr>
+                      </thead>
+                    </table>
+                    <div class="col-md-8" style="padding-left: 0px">
+                      <div class="contentss">
+                        <table class="dashboard">
+                          <tbody>
+                            <ng-container
+                              *ngIf="
+                                RolesInfo
+                                  | alphaFilter
+                                    : alphaSrch
+                                    : alphaColumns
+                                    : 'aa' as Rolesdata;
+                                else noItems
+                              "
+                            >
+                              <tr *ngFor="let list of Rolesdata">
+                                <td style="width: 120px">
+                                  <div style="margin-left: 50px">
+                                    <span>{{ list.Role_Name }}</span>
+                                  </div>
+                                </td>
+                                <td
+                                  *ngIf="
+                                    list.Role_Admin === 'Y';
+                                    else adminBlock
+                                  "
+                                  style="width: 100px"
+                                >
+                                  <div style="text-align: center">
+                                    <span>Admin</span>
+                                  </div>
+                                </td>
+
+                                <ng-template #adminBlock>
+                                  <td style="width: 100px">
+                                    <div style="text-align: center">
+                                      <span>--</span>
+                                    </div>
+                                  </td>
+                                </ng-template>
+                                <td
+                                  *ngIf="
+                                    list.Role_Front === 'Y';
+                                    else frontBlock
+                                  "
+                                  style="width: 100px"
+                                >
+                                  <div style="text-align: center">
+                                    <span>Dealer</span>
+                                  </div>
+                                </td>
+                                <ng-template #frontBlock>
+                                  <td style="width: 100px">
+                                    <div style="text-align: center">
+                                      <span>--</span>
+                                    </div>
+                                  </td>
+                                </ng-template>
+                                <td
+                                  *ngIf="
+                                    list.Role_Status === 'Y';
+                                    else elseBlock
+                                  "
+                                  style="width: 100px"
+                                >
+                                  <div
+                                    class="Active"
+                                    style="text-align: center"
+                                  >
+                                    <span>Active</span>
+                                  </div>
+                                </td>
+                                <ng-template #elseBlock>
+                                  <td style="width: 100px">
+                                    <div
+                                      class="InActive"
+                                      style="text-align: center"
+                                    >
+                                      <span>Inactive</span>
+                                    </div>
+                                  </td>
+                                </ng-template>
+                                <td
+                                  align="center"
+                                  style="width: 37px; cursor: pointer"
+                                >
+                                  <a (click)="Action(list)"
+                                    ><img src="assets/Images/edt_icon.png"
+                                  /></a>
+                                </td>
+                              </tr>
+                              <ng-container
+                                *ngIf="!Rolesdata.length && hide"
+                                [ngTemplateOutlet]="noItems"
+                              ></ng-container>
+                            </ng-container>
+                            <ng-template #noItems>
+                              <tr>
+                                <td colspan="9" style="text-align: center">
+                                  No Roles Available!
+                                </td>
+                              </tr>
+                            </ng-template>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
